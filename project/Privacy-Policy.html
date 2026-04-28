@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1440" />
+<title>Equijust — Privacy Policy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Roboto:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue-50:#F2F6FC; --blue-100:#E9EBF8; --blue-200:#CFDAEE; --blue-300:#A9BFDC;
+    --blue-400:#7C9CC7; --blue-500:#4F7FB7; --blue-600:#2A64B6; --blue-700:#245497;
+    --blue-800:#16325B; --blue-900:#112644; --blue-950:#0D1D35;
+    --gold-100:#F5EEDB; --gold-200:#EBE2CE; --gold-400:#BFA373; --gold-500:#A8894F;
+    --gold-600:#90784A; --gold-700:#6E5B38;
+    --gray-50:#F9FAFB; --gray-100:#F4F4F5; --gray-200:#E4E4E7; --gray-300:#D4D4D8;
+    --gray-400:#A1A1AA; --gray-500:#71717A; --gray-600:#52525B; --gray-700:#3F3F46;
+    --gray-800:#27272A; --gray-900:#18181B;
+    --ink:#09090E;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 16px; line-height: 1.7; color: var(--ink); background: #fff;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { display:block; max-width:100%; }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; }
+
+  /* TOPBAR */
+  .topbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    background: transparent;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    transition: background-color .25s ease, border-color .25s ease, box-shadow .25s ease;
+  }
+  .topbar.is-scrolled {
+    background: rgba(17, 38, 68, 0.92);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-bottom-color: rgba(255,255,255,0.08);
+    box-shadow: 0 8px 24px -12px rgba(9,11,14,0.35);
+  }
+  .topbar-inner {
+    max-width: 1440px; margin: 0 auto;
+    height: 88px; padding: 0 48px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .logo img { display: block; height: 32px; width: auto; }
+  .nav { display: flex; gap: 40px; align-items: center; }
+  .nav > a, .nav-dropdown-toggle {
+    font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.92);
+    display: inline-flex; align-items: center; gap: 4px;
+    transition: color .15s;
+    background: transparent; border: none; padding: 0; cursor: pointer;
+    font-family: inherit;
+  }
+  .nav > a:hover, .nav > a.active,
+  .nav-dropdown-toggle:hover { color: var(--gold-200); }
+  .nav-dropdown { position: relative; }
+  .nav-dropdown.open .nav-dropdown-toggle .chev { transform: rotate(180deg); }
+  .nav-dropdown .chev { transition: transform .2s ease; }
+  .nav-dropdown-menu {
+    position: absolute; top: calc(100% + 18px); left: 50%;
+    transform: translate(-50%, -4px);
+    margin: 0; padding: 10px; list-style: none;
+    background: #fff; border: 1px solid var(--gray-200);
+    border-radius: 10px; min-width: 340px;
+    box-shadow: 0 24px 48px -16px rgba(9,11,14,0.22), 0 6px 12px -6px rgba(9,11,14,0.08);
+    opacity: 0; visibility: hidden;
+    transition: opacity .18s, transform .18s, visibility .18s;
+  }
+  .nav-dropdown.open .nav-dropdown-menu { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+  .nav-dropdown-menu::before {
+    content: "";
+    position: absolute; top: -7px; left: 50%; transform: translateX(-50%) rotate(45deg);
+    width: 12px; height: 12px; background: #fff;
+    border-left: 1px solid var(--gray-200); border-top: 1px solid var(--gray-200);
+  }
+  .nav-dropdown-menu a {
+    display: flex; flex-direction: column; gap: 2px;
+    padding: 10px 14px; border-radius: 6px;
+    font-size: 13.5px; font-weight: 500; color: var(--gray-800);
+    transition: background .12s, color .12s;
+  }
+  .nav-dropdown-menu a:hover { background: var(--blue-50); color: var(--blue-700); }
+  .nav-dropdown-menu a .hint { font-size: 11.5px; font-weight: 400; color: var(--gray-500); }
+  .nav-lang { position: relative; padding-left: 24px; margin-left: 4px; border-left: 1px solid rgba(255,255,255,0.25); }
+  .nav-lang-toggle {
+    background: transparent; border: none; padding: 0;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.92);
+    cursor: pointer; transition: color .15s;
+  }
+  .nav-lang-toggle:hover { color: var(--gold-200); }
+  .nav-lang.open .nav-lang-toggle .chev { transform: rotate(180deg); }
+  .nav-lang .chev { transition: transform .18s; }
+  .nav-lang-menu {
+    position: absolute; top: calc(100% + 12px); right: 0;
+    margin: 0; padding: 6px; list-style: none;
+    background: #fff; border: 1px solid var(--gray-200);
+    border-radius: 8px; min-width: 140px;
+    box-shadow: 0 16px 32px -12px rgba(9,11,14,0.18);
+    opacity: 0; visibility: hidden; transform: translateY(-4px);
+    transition: opacity .15s, transform .15s, visibility .15s;
+  }
+  .nav-lang.open .nav-lang-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+  .nav-lang-menu li {
+    padding: 9px 12px; font-size: 13px; font-weight: 500;
+    color: var(--gray-700); border-radius: 4px; cursor: pointer;
+    transition: background .12s, color .12s;
+  }
+  .nav-lang-menu li:hover { background: var(--blue-50); color: var(--blue-700); }
+  .nav-lang-menu li.active { color: var(--blue-700); font-weight: 600; }
+  .chev { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2; fill: none; }
+
+  /* PAGE HERO */
+  .page-hero {
+    position: relative; height: 320px; overflow: hidden;
+    display: grid; place-items: center;
+    color: #fff; isolation: isolate;
+  }
+  .page-hero::before {
+    content: "";
+    position: absolute; inset: 0; z-index: -2;
+    background-image:
+      linear-gradient(180deg, rgba(13,29,53,0.65) 0%, rgba(13,29,53,0.85) 100%),
+      url('images/briefcases.jpg');
+    background-size: cover; background-position: center;
+  }
+  .page-hero-content { text-align: center; padding: 60px 40px 0; max-width: 860px; }
+  .breadcrumb {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold-200); margin-bottom: 20px;
+  }
+  .breadcrumb a { color: rgba(255,255,255,0.7); transition: color .15s; }
+  .breadcrumb a:hover { color: #fff; }
+  .breadcrumb .sep { color: rgba(255,255,255,0.4); }
+  .page-hero h1 {
+    margin: 0;
+    font-family: 'Inter'; font-weight: 700;
+    font-size: 48px; line-height: 1.05; letter-spacing: -0.02em;
+  }
+
+  /* CONTENT */
+  .policy-wrap {
+    max-width: 860px; margin: 0 auto;
+    padding: 80px 48px 100px;
+  }
+  .policy-wrap h2 {
+    font-family: 'Inter'; font-weight: 700;
+    font-size: 22px; line-height: 1.3;
+    color: var(--blue-900); margin: 48px 0 14px;
+  }
+  .policy-wrap h2:first-child { margin-top: 0; }
+  .policy-wrap p {
+    font-size: 15px; line-height: 1.85; color: var(--gray-700); margin: 0 0 16px;
+  }
+  .policy-wrap ul {
+    margin: 0 0 16px; padding-left: 24px;
+  }
+  .policy-wrap ul li {
+    font-size: 15px; line-height: 1.85; color: var(--gray-700); margin-bottom: 8px;
+  }
+  .policy-wrap a { color: var(--blue-600); text-decoration: underline; }
+  .policy-wrap a:hover { color: var(--blue-800); }
+  .policy-contact {
+    font-size: 15px; line-height: 1.85; color: var(--gray-700);
+    margin: 16px 0 0; font-style: normal;
+  }
+  .policy-contact strong { color: var(--gray-900); }
+
+  /* CONTACT TABLE */
+  .policy-table {
+    width: 100%; border-collapse: collapse;
+    margin-top: 32px; font-size: 14px;
+  }
+  .policy-table th {
+    background: var(--blue-900); color: #fff;
+    font-family: 'Inter'; font-weight: 600;
+    font-size: 13px; padding: 14px 20px;
+    text-align: left; letter-spacing: 0.01em;
+  }
+  .policy-table th:first-child { width: 140px; background: var(--blue-950); }
+  .policy-table td {
+    padding: 14px 20px; color: var(--gray-700);
+    border-bottom: 1px solid var(--gray-200);
+    vertical-align: top;
+  }
+  .policy-table td:first-child {
+    font-weight: 500; color: var(--gray-900);
+    background: var(--gray-50);
+  }
+  .policy-table tr:last-child td { border-bottom: none; }
+  .policy-table a { color: var(--blue-600); }
+
+  /* FOOTER */
+    .footer {
+    background: var(--blue-950);
+    background-image: linear-gradient(rgba(8,20,50,0.82), rgba(8,20,50,0.82)), url('images/skyline-downtown-new-york-new-york-usa.jpg');
+    background-size: cover; background-position: center;
+    color: #fff; padding: 80px 0 32px;
+    position: relative; overflow: hidden;
+  }
+  .footer::before {
+    content: ""; position: absolute; inset: 0;
+    background: repeating-linear-gradient(45deg, transparent 0 60px, rgba(255,255,255,0.02) 60px 61px);
+    pointer-events: none;
+  }
+  .footer-inner { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+  .footer-cols {
+    display: grid; grid-template-columns: 1fr 1fr 1fr 1.4fr;
+    gap: 48px; padding-bottom: 56px;
+  }
+  .footer-col h4 {
+    margin: 0 0 20px;
+    font-family: 'Roboto'; font-weight: 700; font-size: 11px;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--gold-200);
+  }
+  .footer-col a {
+    display: block; padding: 4px 0;
+    font-size: 14px; color: rgba(255,255,255,0.85);
+    transition: color .15s;
+  }
+  .footer-col a:hover { color: var(--gold-200); }
+  .footer-col-map { position: relative; min-height: 140px; }
+  .footer-col-map .map-wrap { position: absolute; inset: 0; overflow: hidden; }
+  .footer-col-map .map-wrap img {
+    width: 130%; height: auto;
+    position: absolute; top: 50%; left: -10%;
+    transform: translateY(-50%); opacity: 0.55;
+  }
+  .footer-col-map .map-wrap svg {
+    position: absolute; top: 50%; left: -10%;
+    transform: translateY(-50%);
+    width: 130%; height: auto; overflow: visible;
+  }
+  .footer-divider { height: 1px; background: rgba(255,255,255,0.15); margin: 0 0 24px; }
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center; gap: 24px;
+  }
+  .footer-nav { display: flex; gap: 28px; }
+  .footer-nav a {
+    font-size: 13px; color: rgba(255,255,255,0.7);
+    transition: color .15s; display: inline-flex; align-items: center; gap: 6px;
+  }
+  .footer-nav a:hover { color: #fff; }
+  .footer-copy { font-size: 13px; color: rgba(255,255,255,0.6); }
+  .footer-brand img { display: block; height: 28px; width: auto; opacity: 0.95; }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="Home.html" class="logo" aria-label="Equijust home">
+      <img src="images/logo-white.svg" alt="Equijust" width="114" height="32" />
+    </a>
+    <nav class="nav">
+      <a href="About.html">About us</a>
+      <div class="nav-dropdown" id="svcDropdown">
+        <button class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+          Services
+          <svg class="chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <ul class="nav-dropdown-menu" role="menu">
+          <li><a href="Services.html#financial-lines"><span>Financial Lines &amp; Professional Risks</span></a></li>
+          <li><a href="Services.html#cyber"><span>Cyber Insurance</span></a></li>
+          <li><a href="Services.html#commercial-crime"><span>Commercial Crime Risks</span></a></li>
+          <li><a href="Services.html#casualty"><span>Commercial Liability &amp; Casualty</span></a></li>
+          <li><a href="Services.html#specialty"><span>Specialty Insurance</span></a></li>
+          <li><a href="Services.html#specie"><span>Specie &amp; High-Value Goods</span></a></li>
+        </ul>
+      </div>
+      <a href="Contact.html">Contact</a>
+      <div class="nav-lang" id="navLang">
+        <button class="nav-lang-toggle" aria-haspopup="listbox" aria-expanded="false">
+          <span class="nav-lang-current">En</span>
+          <svg class="chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <ul class="nav-lang-menu" role="listbox">
+          <li role="option" data-lang="en" class="active">English</li>
+          <li role="option" data-lang="es">Español</li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="page-hero-content">
+    <div class="breadcrumb">
+      <a href="Home.html">Home</a>
+      <span class="sep">/</span>
+      <span>Privacy Policy</span>
+    </div>
+    <h1>Privacy Policy</h1>
+  </div>
+</section>
+
+<!-- CONTENT -->
+<div class="policy-wrap">
+
+  <h2>Personal data</h2>
+  <p>Under the EU's General Data Protection Regulation (GDPR) personal data is defined as:</p>
+  <p><em>"any information relating to an identified or identifiable natural person ('data subject'); an identifiable natural person is one who can be identified, directly or indirectly, in particular by reference to an identifier such as a name, an identification number, location data, an online identifier or to one or more factors specific to the physical, physiological, genetic, mental, economic, cultural or social identity of that natural person".</em></p>
+
+  <h2>Why does Equijust need to collect and store personal data?</h2>
+  <p>In the course of our business of investigating insurance claims, we are sometimes provided with, collect or use personal data. In any event, we are committed to ensuring that such information is appropriate for this purpose and does not constitute an invasion of your privacy.</p>
+
+  <h2>Will Equijust share my personal data with anyone else?</h2>
+  <p>We may pass your personal data on to third-party service providers contracted to Equijust in the course of dealing with you. Any third parties that we may share your data with are obliged to keep your details securely, and to use them only to fulfil the service they provide you on our behalf, such as IT or accounting services. When they no longer need your data to fulfil this service, they will dispose of the details in line with Equijust's procedures. If we wish to pass your sensitive personal data onto a third party we will only do so once we have obtained your consent, unless we are legally required to do otherwise.</p>
+
+  <h2>How will Equijust use the personal data it collects about me?</h2>
+  <p>Equijust will process (collect, store and use) the information you provide in a manner compatible with the GDPR. We will endeavour to keep your information accurate and up to date, and not keep it for longer than is necessary. Equijust is required to retain information in accordance with the law. How long certain kinds of personal data should be kept may also be governed by specific business-sector requirements and agreed practices. Personal data may be held in addition to these periods depending on individual business needs.</p>
+
+  <h2>Under what circumstances will Equijust contact me?</h2>
+  <p>Our aim is not to be intrusive, and we undertake not to ask irrelevant or unnecessary questions. Moreover, the information you provide will be subject to rigorous measures and procedures to minimise the risk of unauthorised access or disclosure.</p>
+
+  <h2>Can I find out the personal data that the organisation holds about me?</h2>
+  <p>Equijust at your request, can confirm what information we hold about you and how it is processed. If Equijust does hold personal data about you, you can request the following information:</p>
+  <ul>
+    <li>Identity and the contact details of the person or organisation that has determined how and why to process your data. In some cases, this will be a representative in the EU.</li>
+    <li>Contact details of the data protection officer, where applicable.</li>
+    <li>The purpose of the processing as well as the legal basis for processing.</li>
+    <li>If the processing is based on the legitimate interests of Equijust or a third party, information about those interests.</li>
+    <li>The categories of personal data collected, stored and processed.</li>
+    <li>Recipient(s) or categories of recipients that the data is/will be disclosed to.</li>
+    <li>If we intend to transfer the personal data to a third country or international organisation, information about how we ensure this is done securely. The EU has approved sending personal data to some countries because they meet a minimum standard of data protection. In other cases, we will ensure there are specific measures in place to secure your information.</li>
+    <li>How long the data will be stored.</li>
+    <li>Details of your rights to correct, erase, restrict or object to such processing.</li>
+    <li>Information about your right to withdraw consent at any time.</li>
+    <li>How to lodge a complaint with the supervisory authority.</li>
+    <li>Whether the provision of personal data is a statutory or contractual requirement, or a requirement necessary to enter into a contract, as well as whether you are obliged to provide the personal data and the possible consequences of failing to provide such data.</li>
+    <li>The source of personal data if it wasn't collected directly from you.</li>
+    <li>Any details and information of automated decision making, such as profiling, and any meaningful information about the logic involved, as well as the significance and expected consequences of such processing.</li>
+  </ul>
+
+  <h2>What forms of ID will I need to provide in order to access this?</h2>
+  <p>Equijust accepts the following forms of ID when information on your personal data is requested (two must be provided):</p>
+  <ul>
+    <li>Passport</li>
+    <li>Driving licence</li>
+    <li>Birth certificate</li>
+    <li>Utility bill (from last 3 months)</li>
+    <li>Current vehicle registration document</li>
+    <li>Bank statement (from last 3 months)</li>
+    <li>Rent book (from last 3 months)</li>
+  </ul>
+  <p>Any requests for access should be directed to our GDPR Owner and data protection representatives, who can be contacted directly here:</p>
+  <address class="policy-contact">
+    <a href="mailto:gdpr.owner@equijust.com">gdpr.owner@equijust.com</a><br/>
+    Tel: +44 (0) 207 623 9800<br/>
+    <strong>The GDPR Owner</strong><br/>
+    Equijust Ltd<br/>
+    5th Floor, 107 Leadenhall Street<br/>
+    London<br/>
+    EC3A 4AF
+  </address>
+
+  <h2>Consent</h2>
+  <p>In circumstances where consent is explicitly required by the GDPR and sought by Equijust, by consenting to this privacy notice you are giving us permission to process your personal data specifically for the purposes identified.</p>
+  <p>If we ask you for sensitive personal data we will always tell you why and how the information will be used.</p>
+  <p>You may withdraw consent at any time by contacting our GDPR Owner.</p>
+
+  <h2>Disclosure</h2>
+  <p>Equijust will not pass on your personal data to third parties without first obtaining your consent where required by the GDPR.</p>
+
+  <h2>Retention period</h2>
+  <p>Equijust will process personal data and will store the personal data only in accordance with the minimum period required by the applicable law.</p>
+
+  <h2>Your rights as a data subject</h2>
+  <p>At any point while we are in possession of or processing your personal data, you, the data subject, have the following rights:</p>
+  <ul>
+    <li><strong>Right of access</strong> – you have the right to request a copy of the information that we hold about you.</li>
+    <li><strong>Right of rectification</strong> – you have a right to correct data that we hold about you that is inaccurate or incomplete.</li>
+    <li><strong>Right to be forgotten</strong> – in certain circumstances you can ask for the data we hold about you to be erased from our records.</li>
+    <li><strong>Right to restriction of processing</strong> – where certain conditions apply to have a right to restrict the processing.</li>
+    <li><strong>Right of portability</strong> – you have the right to have the data we hold about you transferred to another organisation.</li>
+    <li><strong>Right to object</strong> – you have the right to object to certain types of processing such as direct marketing.</li>
+    <li><strong>Right to object to automated processing, including profiling</strong> – you also have the right to be subject to the legal effects of automated processing or profiling.</li>
+    <li><strong>Right to judicial review</strong>: in the event that Equijust refuses your request under rights of access, we will provide you with a reason as to why. You have the right to complain as outlined below.</li>
+  </ul>
+  <p>All of the above requests will be forwarded on should there be a third party involved (as stated above) in the processing of your personal data.</p>
+
+  <h2>Complaints</h2>
+  <p>In the event that you wish to make a complaint about how your personal data is being processed by Equijust (or third parties as described above), or how your complaint has been handled, you have the right to lodge a complaint directly with the supervisory authority and Equijust's data protection representatives/GDPR Owner.</p>
+  <p>The details for each of these contacts are:</p>
+
+  <table class="policy-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Supervisory authority contact details</th>
+        <th>Equijust Ltd GDPR Owner contact details</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Contact Name:</td>
+        <td>Information Commissioner's Office</td>
+        <td>Jamie Mackenzie</td>
+      </tr>
+      <tr>
+        <td>Email:</td>
+        <td><a href="https://ico.org.uk/global/contact-us/email/" target="_blank" rel="noopener">https://ico.org.uk/global/contact-us/email/</a></td>
+        <td>As above</td>
+      </tr>
+      <tr>
+        <td>Telephone:</td>
+        <td><strong>0303 123 1113</strong></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h4>About Us</h4>
+        <a href="About.html">Who We Are</a>
+        <a href="About.html#team">Our Team</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="Contact.html">Contact Us</a>
+        <a href="#">Offices</a>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <a href="Services.html#financial-lines">Financial Lines &amp; Professional Risks</a>
+        <a href="Services.html#cyber">Cyber Insurance</a>
+        <a href="Services.html#commercial-crime">Commercial Crime Risks</a>
+        <a href="Services.html#casualty">Commercial Liability &amp; Casualty</a>
+        <a href="Services.html#specialty">Specialty Insurance</a>
+        <a href="Services.html#specie">Specie &amp; High-Value Goods</a>
+        <a href="Services.html#financial-lines">Pre-Loss Consultancy &amp; Risk Assessment</a>
+      </div>
+      <div class="footer-col footer-col-map">
+        <div class="map-wrap">
+          <img src="images/world-map.svg" alt="" aria-hidden="true" />
+          <svg viewBox="0 0 382 152" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="191" cy="33" r="4" fill="#BFA373"/>
+            <circle cx="191" cy="33" r="2" fill="#fff"/>
+            <circle cx="106" cy="54" r="4" fill="#BFA373"/>
+            <circle cx="106" cy="54" r="2" fill="#fff"/>
+            <circle cx="112" cy="72" r="4" fill="#BFA373"/>
+            <circle cx="112" cy="72" r="2" fill="#fff"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-bottom">
+      <div class="footer-nav">
+        <a href="Privacy-Policy.html">Privacy Policy</a>
+        <a href="https://www.linkedin.com/company/equijust-inc./" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zM6.814 20.452H3.854V9h2.96v11.452z"/></svg>
+          LinkedIn
+        </a>
+      </div>
+      <div class="footer-copy">© 2026 Equijust. All rights reserved.</div>
+      <div class="footer-brand"><img src="images/logo-white.svg" alt="Equijust" width="114" height="32" /></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    const bar = document.querySelector('.topbar');
+    const onScroll = () => bar.classList.toggle('is-scrolled', window.scrollY > 40);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+
+  (function () {
+    const wrap = document.getElementById('navLang');
+    if (!wrap) return;
+    const toggle = wrap.querySelector('.nav-lang-toggle');
+    const current = wrap.querySelector('.nav-lang-current');
+    const items = wrap.querySelectorAll('.nav-lang-menu li');
+    const labels = { en: 'En', es: 'Es' };
+    toggle.addEventListener('click', (e) => { e.stopPropagation(); const o = wrap.classList.toggle('open'); toggle.setAttribute('aria-expanded', o ? 'true' : 'false'); });
+    items.forEach(li => li.addEventListener('click', () => {
+      items.forEach(x => x.classList.remove('active'));
+      li.classList.add('active');
+      current.textContent = labels[li.dataset.lang] || 'En';
+      wrap.classList.remove('open');
+    }));
+    document.addEventListener('click', (e) => { if (!wrap.contains(e.target)) wrap.classList.remove('open'); });
+  })();
+
+  (function () {
+    const wrap = document.getElementById('svcDropdown');
+    if (!wrap) return;
+    const toggle = wrap.querySelector('.nav-dropdown-toggle');
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const o = wrap.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', o ? 'true' : 'false');
+    });
+    document.addEventListener('click', (e) => { if (!wrap.contains(e.target)) wrap.classList.remove('open'); });
+  })();
+</script>
+
+</body>
+</html>

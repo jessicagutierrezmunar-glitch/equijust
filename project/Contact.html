@@ -1,0 +1,989 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1440" />
+<title>Equijust — Contact</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Roboto:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<style>
+  :root {
+    --blue-50:#F2F6FC; --blue-100:#E9EBF8; --blue-200:#CFDAEE; --blue-300:#A9BFDC;
+    --blue-400:#7C9CC7; --blue-500:#4F7FB7; --blue-600:#2A64B6; --blue-700:#245497;
+    --blue-800:#16325B; --blue-900:#112644; --blue-950:#0D1D35;
+    --gold-100:#F5EEDB; --gold-200:#EBE2CE; --gold-400:#BFA373; --gold-500:#A8894F;
+    --gold-600:#90784A; --gold-700:#6E5B38;
+    --gray-50:#F9FAFB; --gray-100:#F4F4F5; --gray-200:#E4E4E7; --gray-300:#D4D4D8;
+    --gray-400:#A1A1AA; --gray-500:#71717A; --gray-600:#52525B; --gray-700:#3F3F46;
+    --gray-800:#27272A; --gray-900:#18181B;
+    --ink:#09090E;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 16px; line-height: 1.7; color: var(--ink); background: #fff;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; }
+
+  /* TOPBAR */
+  .topbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    background: transparent;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    transition: background-color .25s ease, border-color .25s ease, box-shadow .25s ease;
+  }
+  .topbar.is-scrolled {
+    background: rgba(17, 38, 68, 0.92);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-bottom-color: rgba(255,255,255,0.08);
+    box-shadow: 0 8px 24px -12px rgba(9,11,14,0.35);
+  }
+  .topbar-inner {
+    max-width: 1440px; margin: 0 auto;
+    height: 88px; padding: 0 48px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .logo img { display: block; height: 32px; width: auto; }
+  .nav { display: flex; gap: 40px; align-items: center; }
+  .nav > a, .nav-dropdown-toggle {
+    font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.92);
+    display: inline-flex; align-items: center; gap: 4px;
+    transition: color .15s;
+    background: transparent; border: none; padding: 0; cursor: pointer;
+    font-family: inherit;
+  }
+  .nav > a:hover, .nav > a.active,
+  .nav-dropdown-toggle:hover, .nav-dropdown.open .nav-dropdown-toggle { color: var(--gold-200); }
+  .nav-dropdown { position: relative; }
+  .nav-dropdown.open .nav-dropdown-toggle .chev { transform: rotate(180deg); }
+  .nav-dropdown .chev { transition: transform .2s ease; }
+  .nav-dropdown-menu {
+    position: absolute; top: calc(100% + 18px); left: 50%;
+    transform: translate(-50%, -4px);
+    margin: 0; padding: 10px; list-style: none;
+    background: #fff; border: 1px solid var(--gray-200);
+    border-radius: 10px; min-width: 360px;
+    box-shadow: 0 24px 48px -16px rgba(9,11,14,0.22), 0 6px 12px -6px rgba(9,11,14,0.08);
+    opacity: 0; visibility: hidden;
+    transition: opacity .18s, transform .18s, visibility .18s;
+  }
+  .nav-dropdown.open .nav-dropdown-menu { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+  .nav-dropdown-menu::before {
+    content: "";
+    position: absolute; top: -7px; left: 50%; transform: translateX(-50%) rotate(45deg);
+    width: 12px; height: 12px; background: #fff;
+    border-left: 1px solid var(--gray-200); border-top: 1px solid var(--gray-200);
+  }
+  .nav-dropdown-menu a {
+    display: flex; flex-direction: column; gap: 2px;
+    padding: 10px 14px; border-radius: 6px;
+    font-size: 13.5px; font-weight: 500; color: var(--gray-800);
+    transition: background .12s, color .12s;
+  }
+  .nav-dropdown-menu a:hover { background: var(--blue-50); color: var(--blue-700); }
+  .nav-dropdown-menu a .hint { font-size: 11.5px; font-weight: 400; color: var(--gray-500); }
+  .nav-dropdown-menu a:hover .hint { color: var(--blue-600); }
+  .nav-lang { position: relative; padding-left: 24px; margin-left: 4px; border-left: 1px solid rgba(255,255,255,0.25); }
+  .nav-lang-toggle {
+    background: transparent; border: none; padding: 0;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.92);
+    cursor: pointer; transition: color .15s;
+  }
+  .nav-lang-toggle:hover { color: var(--gold-200); }
+  .nav-lang.open .nav-lang-toggle .chev { transform: rotate(180deg); }
+  .nav-lang .chev { transition: transform .18s; }
+  .nav-lang-menu {
+    position: absolute; top: calc(100% + 12px); right: 0;
+    margin: 0; padding: 6px; list-style: none;
+    background: #fff; border: 1px solid var(--gray-200);
+    border-radius: 8px; min-width: 140px;
+    box-shadow: 0 16px 32px -12px rgba(9,11,14,0.18);
+    opacity: 0; visibility: hidden; transform: translateY(-4px);
+    transition: opacity .15s, transform .15s, visibility .15s;
+  }
+  .nav-lang.open .nav-lang-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+  .nav-lang-menu li {
+    padding: 9px 12px; font-size: 13px; font-weight: 500;
+    color: var(--gray-700); border-radius: 4px; cursor: pointer;
+    transition: background .12s, color .12s;
+  }
+  .nav-lang-menu li:hover { background: var(--blue-50); color: var(--blue-700); }
+  .nav-lang-menu li.active { color: var(--blue-700); font-weight: 600; }
+  .chev { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2; fill: none; }
+
+  /* PAGE HERO */
+  .page-hero {
+    position: relative; height: 420px; overflow: hidden;
+    display: grid; place-items: center;
+    color: #fff; isolation: isolate;
+  }
+  .page-hero::before {
+    content: "";
+    position: absolute; inset: 0; z-index: -2;
+    background-image:
+      linear-gradient(180deg, rgba(13,29,53,0.55) 0%, rgba(13,29,53,0.78) 100%),
+      url('images/cityscape-aerial.jpg');
+    background-size: cover; background-position: center;
+  }
+  .page-hero-content { text-align: center; padding: 60px 40px 0; max-width: 860px; }
+  .breadcrumb {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold-200); margin-bottom: 20px;
+  }
+  .breadcrumb a { color: rgba(255,255,255,0.7); transition: color .15s; }
+  .breadcrumb a:hover { color: #fff; }
+  .breadcrumb .sep { color: rgba(255,255,255,0.4); }
+  .page-hero h1 {
+    margin: 0; font-family: 'Inter'; font-weight: 700;
+    font-size: 56px; line-height: 1.05; letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  .page-hero h1 em { font-style: normal; color: var(--gold-200); font-weight: 400; }
+  .page-hero .kicker {
+    margin-top: 20px; font-size: 17px; line-height: 1.6; opacity: 0.88;
+    max-width: 620px; margin-left: auto; margin-right: auto;
+  }
+
+  /* CONTACT GRID */
+  .contact-section { max-width: 1200px; margin: 0 auto; padding: 100px 48px; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .contact-col h2 {
+    font-family: 'Roboto'; font-weight: 400;
+    font-size: 36px; line-height: 1.15;
+    color: var(--blue-900); letter-spacing: -0.01em;
+    margin: 0 0 16px; text-wrap: balance;
+  }
+  .contact-col h2 em { font-style: normal; color: var(--gold-500); font-weight: 400; }
+  .contact-eyebrow {
+    font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gold-500); margin-bottom: 14px;
+  }
+  .contact-col p.lead {
+    font-size: 16px; color: var(--gray-700); line-height: 1.75;
+    margin: 0 0 32px; max-width: 480px;
+  }
+
+  /* FORM */
+  .form { display: flex; flex-direction: column; gap: 16px; }
+  .field { display: flex; flex-direction: column; gap: 8px; }
+  .field label { font-size: 13px; font-weight: 500; color: var(--gray-800); }
+  .field input, .field textarea, .field select {
+    font-family: inherit; font-size: 14px; line-height: 20px; color: var(--ink);
+    padding: 11px 14px; border-radius: 6px;
+    border: 1px solid var(--gray-200); background: #fff;
+    transition: border-color .15s, box-shadow .15s; width: 100%;
+  }
+  .field input:focus, .field textarea:focus, .field select:focus {
+    outline: none; border-color: var(--blue-400);
+    box-shadow: 0 0 0 3px rgba(79,127,183,0.15);
+  }
+  .field textarea { resize: vertical; min-height: 110px; }
+  .phone-row { display: grid; grid-template-columns: 90px 1fr; gap: 8px; }
+  .checkbox {
+    display: inline-flex; gap: 10px; align-items: center;
+    font-size: 13px; color: var(--gray-700); cursor: pointer;
+  }
+  .checkbox input { width: 16px; height: 16px; accent-color: var(--blue-600); }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 14px; font-weight: 600; line-height: 1;
+    padding: 13px 22px; border-radius: 6px;
+    transition: background .15s, color .15s, border-color .15s, transform .15s;
+    border: 1px solid transparent; cursor: pointer;
+  }
+  .btn-primary { background: var(--blue-600); color: #fff; border-color: var(--blue-600); }
+  .btn-primary:hover:not(:disabled) {
+    background: var(--blue-700); border-color: var(--blue-700);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px -8px rgba(42,100,182,0.6);
+  }
+  .btn-primary:disabled { opacity: 0.7; cursor: not-allowed; }
+  .btn .arrow { transition: transform .18s ease; }
+  .btn:hover .arrow { transform: translateX(3px); }
+
+  /* QUICK CONTACT CARD */
+  .quick-card {
+    background: var(--blue-50); border: 1px solid var(--blue-100);
+    border-radius: 10px; padding: 28px; margin-top: 24px;
+  }
+  .quick-card h3 {
+    margin: 0 0 16px; font-family: 'Inter'; font-weight: 600;
+    font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--blue-900);
+  }
+  .quick-list { display: flex; flex-direction: column; gap: 14px; }
+  .quick-item {
+    display: grid; grid-template-columns: 28px 1fr;
+    gap: 14px; align-items: start;
+    font-size: 14px; color: var(--gray-800);
+  }
+  .quick-item .icon {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: #fff; border: 1px solid var(--blue-100);
+    display: grid; place-items: center; color: var(--blue-700); flex-shrink: 0;
+  }
+  .quick-item .label {
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gold-600); font-weight: 600; display: block; margin-bottom: 2px;
+  }
+  .quick-item a { color: var(--blue-800); font-weight: 500; transition: color .15s; }
+  .quick-item a:hover { color: var(--blue-600); }
+
+  /* MAP SECTION */
+  .map-section {
+    background: var(--blue-950);
+    padding: 88px 0 96px;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .map-section::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(45deg, transparent 0 80px, rgba(255,255,255,0.01) 80px 81px);
+    pointer-events: none;
+  }
+  .map-inner { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+  .map-head {
+    display: grid; grid-template-columns: 1fr 1.5fr;
+    gap: 80px; align-items: end;
+    margin-bottom: 40px;
+  }
+  .map-head .eyebrow {
+    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--gold-400); font-weight: 600; margin-bottom: 16px;
+  }
+  .map-head h2 {
+    font-family: 'Roboto'; font-weight: 400;
+    font-size: 40px; line-height: 1.1;
+    color: #fff; letter-spacing: -0.01em;
+    margin: 0; text-wrap: balance;
+  }
+  .map-head h2 em { font-style: normal; color: var(--gold-400); font-weight: 400; }
+  .map-head p { font-size: 15px; color: rgba(255,255,255,0.62); margin: 0; line-height: 1.7; }
+
+  /* Map layout: info panel left + map right */
+  .map-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    border-radius: 12px; overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 30px 80px -30px rgba(0,0,0,0.6);
+  }
+
+  /* Left info panel */
+  .map-info-panel {
+    background: #fff;
+    display: flex; flex-direction: column;
+    overflow-y: auto;
+    max-height: 560px;
+  }
+  .map-info-placeholder {
+    flex: 1; display: flex; flex-direction: column;
+    padding: 0;
+  }
+  .map-info-placeholder-header {
+    background: var(--blue-900);
+    padding: 20px 22px 18px;
+  }
+  .map-info-placeholder-eyebrow {
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--gold-400); font-weight: 600; margin-bottom: 5px;
+  }
+  .map-info-placeholder-title {
+    font-family: 'Roboto'; font-weight: 400;
+    font-size: 22px; color: #fff; letter-spacing: -0.01em; margin: 0 0 3px;
+  }
+  .map-info-placeholder-sub { font-size: 12px; color: rgba(255,255,255,0.5); }
+  .map-info-placeholder-body { padding: 20px 22px; flex: 1; }
+  .map-info-placeholder-desc {
+    font-size: 13px; color: var(--gray-600); line-height: 1.7; margin: 0 0 20px;
+  }
+  .map-info-stat-list { display: flex; flex-direction: column; gap: 12px; }
+  .map-info-stat {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 13px; color: var(--gray-700);
+  }
+  .map-info-stat-num {
+    font-family: 'Roboto'; font-size: 22px; font-weight: 400;
+    color: var(--blue-900); letter-spacing: -0.02em;
+    min-width: 36px; text-align: right; flex-shrink: 0;
+  }
+  .map-info-stat-label { line-height: 1.35; }
+  .map-info-stat-label small { display: block; font-size: 11px; color: var(--gray-400); }
+  .map-info-placeholder-hint {
+    margin-top: 20px; padding-top: 16px;
+    border-top: 1px solid var(--gray-100);
+    font-size: 12px; color: var(--gray-400);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .map-info-placeholder-hint svg { flex-shrink: 0; opacity: 0.5; }
+
+  /* Office card inside panel */
+  .map-office-card { display: none; flex-direction: column; }
+  .map-office-card.is-visible { display: flex; }
+  .map-office-card-header {
+    background: var(--blue-900);
+    padding: 20px 22px 18px;
+    flex-shrink: 0;
+  }
+  .map-office-eyebrow {
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--gold-400); font-weight: 600; margin-bottom: 5px;
+  }
+  .map-office-city {
+    font-family: 'Roboto'; font-weight: 400;
+    font-size: 26px; color: #fff; letter-spacing: -0.01em;
+    margin: 0 0 3px;
+  }
+  .map-office-entity { font-size: 12px; color: rgba(255,255,255,0.5); }
+  .map-office-body { padding: 18px 22px; flex: 1; overflow-y: auto; }
+  .map-info-row {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 13px; color: var(--gray-700); line-height: 1.55;
+    margin-bottom: 12px;
+  }
+  .map-info-row svg { flex-shrink: 0; margin-top: 2px; color: var(--gold-500); }
+  .map-info-row a { color: var(--blue-700); transition: color .15s; }
+  .map-info-row a:hover { color: var(--blue-900); }
+  .map-info-divider { height: 1px; background: var(--gray-100); margin: 14px 0; }
+  .map-team-label {
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gold-600); font-weight: 600; margin-bottom: 10px;
+  }
+  .map-contact-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 0; border-bottom: 1px solid var(--gray-100);
+  }
+  .map-contact-row:last-child { border-bottom: none; }
+  .map-contact-name { font-size: 13px; font-weight: 500; color: var(--gray-900); }
+  .map-contact-links { display: flex; gap: 4px; }
+  .map-contact-links a {
+    width: 28px; height: 28px; border-radius: 6px;
+    display: grid; place-items: center;
+    color: var(--gray-400); transition: background .15s, color .15s;
+  }
+  .map-contact-links a:hover { background: var(--blue-50); color: var(--blue-700); }
+  .map-contact-links a.lnk-li { color: #0A66C2; }
+  .map-contact-links a.lnk-li:hover { background: rgba(10,102,194,0.08); }
+  .map-gmaps-btn {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    margin-top: 16px; padding: 10px 14px; border-radius: 8px;
+    background: var(--blue-900); color: #fff;
+    font-size: 12.5px; font-weight: 600; letter-spacing: 0.02em;
+    transition: background .15s;
+  }
+  .map-gmaps-btn:hover { background: var(--blue-700); }
+
+  /* Legend chips above map */
+  .map-legend {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-bottom: 16px;
+  }
+  .map-legend .legend-chip {
+    font-family: inherit; font-size: 13px; font-weight: 500;
+    color: rgba(255,255,255,0.9);
+    padding: 7px 13px 7px 10px; border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.14);
+    background: rgba(255,255,255,0.04);
+    display: inline-flex; align-items: center; gap: 8px;
+    cursor: pointer; transition: all .15s;
+  }
+  .map-legend .legend-chip:hover { background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.28); }
+  .map-legend .legend-chip.is-active { background: var(--gold-400); color: var(--blue-950); border-color: var(--gold-400); }
+  .map-legend .legend-chip .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--gold-400); flex: 0 0 7px;
+  }
+  .map-legend .legend-chip.is-active .dot { background: var(--blue-950); }
+
+  #officesMap { height: 560px; width: 100%; background: #f4f6f9; }
+
+  /* Leaflet overrides */
+  .leaflet-container { font-family: 'Inter', sans-serif; background: #f4f6f9; }
+  .leaflet-control-attribution {
+    background: rgba(255,255,255,0.85) !important;
+    color: var(--gray-500) !important; font-size: 10px !important;
+  }
+  .leaflet-control-attribution a { color: var(--blue-600) !important; }
+  .leaflet-control-zoom a {
+    background: #fff !important; color: var(--blue-900) !important;
+    border-color: var(--gray-200) !important; font-size: 16px !important;
+  }
+  .leaflet-control-zoom a:hover { background: var(--blue-50) !important; color: var(--blue-700) !important; }
+  .leaflet-popup-content-wrapper { display: none !important; }
+  .leaflet-popup-tip-container { display: none !important; }
+
+  /* Custom pin */
+  .eq-pin { position: relative; width: 36px; height: 46px; pointer-events: auto; }
+  .eq-pin .pin-body {
+    position: absolute; left: 50%; top: 0; transform: translateX(-50%);
+    width: 32px; height: 32px; border-radius: 50% 50% 50% 0;
+    rotate: -45deg;
+    background: var(--gold-400);
+    border: 2px solid rgba(255,255,255,0.9);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4), 0 0 0 4px rgba(191,163,115,0.15);
+    transition: transform .2s, background .2s, box-shadow .2s;
+  }
+  .eq-pin .pin-inner {
+    position: absolute; left: 50%; top: 7px; transform: translateX(-50%);
+    width: 14px; height: 14px; border-radius: 50%;
+    background: rgba(13,29,53,0.9);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold-400); font-size: 8px; font-weight: 700; font-family: 'Inter';
+    transition: color .2s, background .2s;
+  }
+  .eq-pin .pin-shadow {
+    position: absolute; left: 50%; bottom: 4px; transform: translateX(-50%);
+    width: 12px; height: 4px; border-radius: 50%;
+    background: rgba(0,0,0,0.3); filter: blur(2px);
+  }
+  .eq-pin.is-active .pin-body {
+    background: var(--blue-900);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.5), 0 0 0 6px rgba(17,38,68,0.25);
+  }
+  .eq-pin.is-active .pin-inner { color: #fff; background: var(--gold-400); }
+  .eq-pin:hover .pin-body { transform: translateX(-50%) scale(1.1); }
+
+  /* FOOTER */
+  .footer {
+    background: var(--blue-950);
+    background-image: linear-gradient(rgba(8,20,50,0.82), rgba(8,20,50,0.82)), url('images/skyline-downtown-new-york-new-york-usa.jpg');
+    background-size: cover; background-position: center;
+    color: #fff; padding: 80px 0 32px;
+    position: relative; overflow: hidden;
+  }
+  .footer::before {
+    content: ""; position: absolute; inset: 0;
+    background: repeating-linear-gradient(45deg, transparent 0 60px, rgba(255,255,255,0.02) 60px 61px);
+    pointer-events: none;
+  }
+  .footer-inner { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+  .footer-cols {
+    display: grid; grid-template-columns: 1fr 1fr 1fr 1.4fr;
+    gap: 48px; padding-bottom: 56px;
+  }
+  .footer-col h4 {
+    margin: 0 0 20px;
+    font-family: 'Roboto'; font-weight: 700; font-size: 11px;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--gold-200);
+  }
+  .footer-col a {
+    display: block; padding: 4px 0;
+    font-size: 14px; color: rgba(255,255,255,0.85);
+    transition: color .15s;
+  }
+  .footer-col a:hover { color: var(--gold-200); }
+  .footer-col-map { position: relative; min-height: 140px; }
+  .footer-col-map .map-wrap { position: absolute; inset: 0; overflow: hidden; }
+  .footer-col-map .map-wrap img {
+    width: 130%; height: auto;
+    position: absolute; top: 50%; left: -10%;
+    transform: translateY(-50%); opacity: 0.55;
+  }
+  .footer-col-map .map-wrap svg {
+    position: absolute; top: 50%; left: -10%;
+    transform: translateY(-50%);
+    width: 130%; height: auto; overflow: visible;
+  }
+  .footer-divider { height: 1px; background: rgba(255,255,255,0.15); margin: 0 0 24px; }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+  .footer-nav { display: flex; gap: 28px; }
+  .footer-nav a {
+    font-size: 13px; color: rgba(255,255,255,0.7);
+    transition: color .15s; display: inline-flex; align-items: center; gap: 6px;
+  }
+  .footer-nav a:hover { color: #fff; }
+  .footer-copy { font-size: 13px; color: rgba(255,255,255,0.6); }
+  .footer-brand img { display: block; height: 28px; width: auto; opacity: 0.95; }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="Home.html" class="logo" aria-label="Equijust home">
+      <img src="images/logo-white.svg" alt="Equijust" width="114" height="32" />
+    </a>
+    <nav class="nav">
+      <a href="About.html">About us</a>
+      <div class="nav-dropdown" id="svcDropdown">
+        <button class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+          Services
+          <svg class="chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <ul class="nav-dropdown-menu" role="menu"></ul>
+      </div>
+      <a href="Contact.html" class="active">Contact</a>
+      <div class="nav-lang" id="navLang">
+        <button class="nav-lang-toggle" aria-haspopup="listbox" aria-expanded="false">
+          <span class="nav-lang-current">En</span>
+          <svg class="chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <ul class="nav-lang-menu" role="listbox">
+          <li role="option" data-lang="en" class="active">English</li>
+          <li role="option" data-lang="es">Español</li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="page-hero-content">
+    <div class="breadcrumb">
+      <a href="Home.html">Home</a>
+      <span class="sep">/</span>
+      <span>Contact</span>
+    </div>
+    <h1>Get in touch with <em>our adjusters.</em></h1>
+    <p class="kicker">Tell us about your claim and we'll route you to the right specialist — whether that's London, Miami or Bogotá.</p>
+  </div>
+</section>
+
+<!-- CONTACT + FORM -->
+<section class="contact-section">
+  <div class="contact-grid">
+    <div class="contact-col">
+      <div class="contact-eyebrow">Send us a message</div>
+      <h2>Speak to the <em>team</em> directly.</h2>
+      <p class="lead">Fill in the form and one of our adjusters will come back to you within one working day. If your matter is time-sensitive, please call the nearest office directly.</p>
+
+      <div class="quick-card">
+        <h3>Quick contact</h3>
+        <div class="quick-list">
+          <div class="quick-item">
+            <div class="icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div>
+              <span class="label">London — headquarters</span>
+              <a href="tel:+442076239800">+44 (0) 207 623 9800</a>
+            </div>
+          </div>
+          <div class="quick-item">
+            <div class="icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <span class="label">General enquiries</span>
+              <a href="mailto:info@equijust.com">info@equijust.com</a>
+            </div>
+          </div>
+          <div class="quick-item">
+            <div class="icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div>
+              <span class="label">Response time</span>
+              <span>Within 1 working day</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-col">
+      <form class="form" id="contactForm" novalidate>
+        <div class="field">
+          <label for="c-name">Full name</label>
+          <input type="text" id="c-name" placeholder="Enter your name" />
+        </div>
+        <div class="field">
+          <label for="c-email">Email address</label>
+          <input type="email" id="c-email" placeholder="Enter your email address" />
+        </div>
+        <div class="field">
+          <label for="c-phone">Phone number</label>
+          <div class="phone-row">
+            <select aria-label="Country code">
+              <option>+44</option><option>+1</option><option>+57</option>
+              <option>+27</option><option>+34</option><option>+52</option>
+            </select>
+            <input type="tel" id="c-phone" placeholder="Enter your phone number" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="c-company">Company or organisation</label>
+          <input type="text" id="c-company" placeholder="Enter your company" />
+        </div>
+        <div class="field">
+          <label for="c-office">Preferred office</label>
+          <select id="c-office">
+            <option value="">No preference</option>
+            <option value="london">London</option>
+            <option value="miami">Miami</option>
+            <option value="bogota">Bogotá</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="c-subject">Subject</label>
+          <select id="c-subject">
+            <option value="">Select a subject</option>
+            <option>New claim enquiry</option>
+            <option>Ongoing matter</option>
+            <option>Pre-loss consultancy</option>
+            <option>Network partnership</option>
+            <option>Press &amp; media</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="c-message">Message</label>
+          <textarea id="c-message" placeholder="Briefly describe your enquiry — jurisdiction, class of cover, approximate loss amount if relevant."></textarea>
+        </div>
+        <label class="checkbox">
+          <input type="checkbox" id="c-privacy" />
+          I accept the privacy policy
+        </label>
+        <button type="submit" class="btn btn-primary" style="align-self:flex-start;">
+          Send message
+          <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- OFFICES MAP -->
+<section class="map-section" id="offices-map">
+  <div class="map-inner">
+    <div class="map-head">
+      <div>
+        <div class="eyebrow">Our locations</div>
+        <h2>Three offices, <em>one team.</em></h2>
+      </div>
+      <p>London, Miami and Bogotá — three offices across two continents. Click any pin to see the full team, address and direct contacts for each location.</p>
+    </div>
+
+    <div class="map-legend" id="mapLegend"></div>
+
+    <div class="map-layout">
+      <!-- Left info panel -->
+      <div class="map-info-panel" id="mapInfoPanel">
+        <div class="map-info-placeholder" id="mapPlaceholder">
+          <div class="map-info-placeholder-header">
+            <div class="map-info-placeholder-eyebrow">Global presence</div>
+            <div class="map-info-placeholder-title">Where we operate</div>
+            <div class="map-info-placeholder-sub">Europe · Americas · Middle East · Africa</div>
+          </div>
+          <div class="map-info-placeholder-body">
+            <p class="map-info-placeholder-desc">Equijust operates across three continents with senior adjusters on the ground — delivering local expertise and global reach for every claim we handle.</p>
+            <div class="map-info-stat-list">
+              <div class="map-info-stat">
+                <div class="map-info-stat-num">30<span style="font-size:14px">+</span></div>
+                <div class="map-info-stat-label">Years of specialist experience<small>across financial lines, cyber &amp; crime</small></div>
+              </div>
+              <div class="map-info-stat">
+                <div class="map-info-stat-num">3</div>
+                <div class="map-info-stat-label">Offices worldwide<small>London · Miami · Bogotá</small></div>
+              </div>
+              <div class="map-info-stat">
+                <div class="map-info-stat-num">60<span style="font-size:14px">+</span></div>
+                <div class="map-info-stat-label">Jurisdictions covered<small>through our global network of partners</small></div>
+              </div>
+            </div>
+            <div class="map-info-placeholder-hint">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Select a pin on the map to see team &amp; contacts.
+            </div>
+          </div>
+        </div>
+        <div class="map-office-card" id="mapOfficeCard">
+          <div class="map-office-card-header">
+            <div class="map-office-eyebrow" id="moEyebrow"></div>
+            <div class="map-office-city" id="moCity"></div>
+            <div class="map-office-entity" id="moEntity"></div>
+          </div>
+          <div class="map-office-body" id="moBody"></div>
+        </div>
+      </div>
+      <!-- Map -->
+      <div id="officesMap"></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h4>About Us</h4>
+        <a href="About.html">Who We Are</a>
+        <a href="About.html#team">Our Team</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="Contact.html">Contact Us</a>
+        <a href="#">Offices</a>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <a href="Services.html#financial-lines">Financial Lines &amp; Professional Risks</a>
+        <a href="Services.html#cyber">Cyber Insurance</a>
+        <a href="Services.html#commercial-crime">Commercial Crime Risks</a>
+        <a href="Services.html#casualty">Commercial Liability &amp; Casualty</a>
+        <a href="Services.html#specialty">Specialty Insurance</a>
+        <a href="Services.html#specie">Specie &amp; High-Value Goods</a>
+        <a href="Services.html#specie">Pre-Loss Consultancy &amp; Risk Assessment</a>
+      </div>
+      <div class="footer-col footer-col-map">
+        <div class="map-wrap">
+          <img src="images/world-map.svg" alt="" aria-hidden="true" />
+          <svg viewBox="0 0 382 152" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="191" cy="33" r="4" fill="#BFA373"/>
+            <circle cx="191" cy="33" r="2" fill="#fff"/>
+            <circle cx="106" cy="54" r="4" fill="#BFA373"/>
+            <circle cx="106" cy="54" r="2" fill="#fff"/>
+            <circle cx="112" cy="72" r="4" fill="#BFA373"/>
+            <circle cx="112" cy="72" r="2" fill="#fff"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-bottom">
+      <div class="footer-nav">
+        <a href="Privacy-Policy.html">Privacy Policy</a>
+        <a href="https://www.linkedin.com/company/equijust-inc./" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zM6.814 20.452H3.854V9h2.96v11.452z"/></svg>
+          LinkedIn
+        </a>
+      </div>
+      <div class="footer-copy">© 2026 Equijust. All rights reserved.</div>
+      <div class="footer-brand"><img src="images/logo-white.svg" alt="Equijust" width="114" height="32" /></div>
+    </div>
+  </div>
+</footer>
+
+<script src="services-data.js"></script>
+<script src="offices-data.js"></script>
+<script>
+  /* Topbar scroll */
+  (function () {
+    const bar = document.querySelector('.topbar');
+    const onScroll = () => bar.classList.toggle('is-scrolled', window.scrollY > 40);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+
+  /* Language switcher */
+  (function () {
+    const wrap = document.getElementById('navLang');
+    if (!wrap) return;
+    const toggle = wrap.querySelector('.nav-lang-toggle');
+    const current = wrap.querySelector('.nav-lang-current');
+    const items = wrap.querySelectorAll('.nav-lang-menu li');
+    const labels = { en: 'En', es: 'Es' };
+    toggle.addEventListener('click', (e) => { e.stopPropagation(); const o = wrap.classList.toggle('open'); toggle.setAttribute('aria-expanded', o ? 'true' : 'false'); });
+    items.forEach(li => li.addEventListener('click', () => {
+      items.forEach(x => x.classList.remove('active'));
+      li.classList.add('active');
+      current.textContent = labels[li.dataset.lang] || 'En';
+      wrap.classList.remove('open');
+    }));
+    document.addEventListener('click', (e) => { if (!wrap.contains(e.target)) wrap.classList.remove('open'); });
+  })();
+
+  /* Services dropdown */
+  (function () {
+    if (!window.SERVICES) return;
+    const wrap = document.getElementById('svcDropdown');
+    const menu = wrap.querySelector('.nav-dropdown-menu');
+    const toggle = wrap.querySelector('.nav-dropdown-toggle');
+    menu.innerHTML = window.SERVICES.map((s, i) => `
+      <li role="none">
+        <a role="menuitem" href="Services.html#${s.slug}">
+          <span>${String(i + 1).padStart(2, '0')} · ${s.name}</span>
+          <span class="hint">${s.hint}</span>
+        </a>
+      </li>
+    `).join('');
+    toggle.addEventListener('click', (e) => { e.stopPropagation(); const o = wrap.classList.toggle('open'); toggle.setAttribute('aria-expanded', o ? 'true' : 'false'); });
+    document.addEventListener('click', (e) => { if (!wrap.contains(e.target)) wrap.classList.remove('open'); });
+  })();
+
+  /* Offices map */
+  (function () {
+    if (!window.OFFICES || !window.L) return;
+    const mapEl = document.getElementById('officesMap');
+    const legendEl = document.getElementById('mapLegend');
+    if (!mapEl || !legendEl) return;
+
+    const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+    const map = L.map(mapEl, {
+      zoomControl: true,
+      scrollWheelZoom: false,
+      worldCopyJump: true,
+      minZoom: 2,
+      maxZoom: 16
+    }).setView([20, 0], 2);
+
+    /* Positron tiles — clean white, contrasts with dark section */
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      subdomains: 'abcd',
+      maxZoom: 19
+    }).addTo(map);
+
+    const latLngs = window.OFFICES
+      .filter(o => Array.isArray(o.coords) && o.coords.length === 2)
+      .map(o => L.latLng(o.coords[0], o.coords[1]));
+    const bounds = latLngs.length ? L.latLngBounds(latLngs) : null;
+    setTimeout(() => {
+      if (bounds && bounds.isValid()) map.fitBounds(bounds, { padding: [60, 60], maxZoom: 4 });
+    }, 150);
+
+    const markers = {};
+    const pinEls = {};
+    const placeholder = document.getElementById('mapPlaceholder');
+    const officeCard = document.getElementById('mapOfficeCard');
+
+    const liIcon = `<svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zM6.814 20.452H3.854V9h2.96v11.452z"/></svg>`;
+    const mailIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>`;
+
+    window.OFFICES.forEach((o, i) => {
+      const pinHtml = `
+        <div class="eq-pin" data-city="${esc(o.city)}">
+          <div class="pin-body"></div>
+          <div class="pin-inner">${i + 1}</div>
+          <div class="pin-shadow"></div>
+        </div>`;
+
+      const icon = L.divIcon({
+        className: 'eq-pin-wrap',
+        html: pinHtml,
+        iconSize: [36, 46],
+        iconAnchor: [18, 40]
+      });
+
+      const marker = L.marker(o.coords, { icon, riseOnHover: true }).addTo(map);
+      marker.on('click', () => showOffice(o.city));
+      markers[o.city] = marker;
+    });
+
+    setTimeout(() => {
+      document.querySelectorAll('.eq-pin').forEach(el => {
+        pinEls[el.dataset.city] = el;
+      });
+    }, 50);
+
+    function showOffice(city) {
+      const o = window.OFFICES.find(x => x.city === city);
+      if (!o) return;
+
+      /* Fill panel */
+      document.getElementById('moEyebrow').textContent = o.flag;
+      document.getElementById('moCity').textContent = o.city;
+      document.getElementById('moEntity').textContent = o.entity;
+
+      const contactsHtml = (o.contacts || []).map(c => `
+        <div class="map-contact-row">
+          <span class="map-contact-name">${esc(c.name)}</span>
+          <div class="map-contact-links">
+            ${c.linkedin ? `<a href="${esc(c.linkedin)}" target="_blank" rel="noopener" class="lnk-li" title="LinkedIn">${liIcon}</a>` : ''}
+            <a href="mailto:${esc(c.email)}" title="${esc(c.email)}">${mailIcon}</a>
+          </div>
+        </div>`).join('');
+
+      document.getElementById('moBody').innerHTML = `
+        <div class="map-info-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span style="white-space:pre-line">${esc(o.address)}</span>
+        </div>
+        <div class="map-info-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <div>
+            <a href="tel:${esc(o.tel.replace(/[^+0-9]/g,''))}">${esc(o.tel)}</a>
+            ${o.fax ? `<br><span style="color:var(--gray-500);font-size:12px">Fax: ${esc(o.fax)}</span>` : ''}
+          </div>
+        </div>
+        ${contactsHtml ? `<div class="map-info-divider"></div><div class="map-team-label">Team contacts</div>${contactsHtml}` : ''}
+        <a class="map-gmaps-btn" href="${esc(o.gmaps)}" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Open in Google Maps
+        </a>`;
+
+      placeholder.style.display = 'none';
+      officeCard.classList.add('is-visible');
+      setActive(city);
+    }
+
+    function setActive(city) {
+      Object.keys(pinEls).forEach(c => pinEls[c] && pinEls[c].classList.toggle('is-active', c === city));
+      legendEl.querySelectorAll('.legend-chip').forEach(chip => {
+        chip.classList.toggle('is-active', chip.dataset.city === city);
+      });
+    }
+
+    function focusCity(city, animate = true) {
+      const o = window.OFFICES.find(x => x.city === city);
+      if (!o) return;
+      if (animate) {
+        map.flyTo(L.latLng(o.coords[0], o.coords[1]), 11, { duration: 1.2 });
+        setTimeout(() => showOffice(city), 900);
+      } else {
+        map.setView(L.latLng(o.coords[0], o.coords[1]), 11);
+        showOffice(city);
+      }
+    }
+
+    /* Legend chips */
+    legendEl.innerHTML = window.OFFICES.map((o, i) => `
+      <button type="button" class="legend-chip" data-city="${esc(o.city)}">
+        <span class="dot"></span>
+        <span>${esc(o.city)}</span>
+        <small>${esc(o.flag)}</small>
+      </button>`).join('') + `
+      <button type="button" class="legend-chip" data-action="reset" style="margin-left:auto;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <span>View all</span>
+      </button>`;
+
+    legendEl.addEventListener('click', (e) => {
+      const chip = e.target.closest('.legend-chip');
+      if (!chip) return;
+      if (chip.dataset.action === 'reset') {
+        if (bounds && bounds.isValid()) map.flyToBounds(bounds, { padding: [60, 60], maxZoom: 4, duration: 1.0 });
+        officeCard.classList.remove('is-visible');
+        placeholder.style.display = '';
+        setActive(null);
+        return;
+      }
+      if (chip.dataset.city) focusCity(chip.dataset.city);
+    });
+
+    setTimeout(() => map.invalidateSize(), 200);
+    window.addEventListener('resize', () => map.invalidateSize());
+  })();
+
+  /* Form submit */
+  (function () {
+    const form = document.getElementById('contactForm');
+    if (!form) return;
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const btn = form.querySelector('button[type=submit]');
+      btn.innerHTML = 'Message sent ✓';
+      btn.disabled = true;
+    });
+  })();
+</script>
+
+</body>
+</html>

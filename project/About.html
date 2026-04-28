@@ -1,0 +1,1051 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1440" />
+<title>Equijust — About us</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Roboto:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue-50:#F2F6FC; --blue-100:#E9EBF8; --blue-200:#CFDAEE; --blue-300:#A9BFDC;
+    --blue-400:#7C9CC7; --blue-500:#4F7FB7; --blue-600:#2A64B6; --blue-700:#245497;
+    --blue-800:#16325B; --blue-900:#112644; --blue-950:#0D1D35;
+    --gold-100:#F5EEDB; --gold-200:#EBE2CE; --gold-400:#BFA373; --gold-500:#A8894F;
+    --gold-600:#90784A; --gold-700:#6E5B38;
+    --gray-50:#F9FAFB; --gray-100:#F4F4F5; --gray-200:#E4E4E7; --gray-300:#D4D4D8;
+    --gray-400:#A1A1AA; --gray-500:#71717A; --gray-600:#52525B; --gray-700:#3F3F46;
+    --gray-800:#27272A; --gray-900:#18181B;
+    --ink:#09090E;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 16px; line-height: 1.7; color: var(--ink); background: #fff;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { display:block; max-width:100%; }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; }
+
+  /* TOPBAR */
+  .topbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    background: transparent;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    transition: background-color .25s ease, border-color .25s ease, box-shadow .25s ease;
+  }
+  .topbar.is-scrolled {
+    background: rgba(17, 38, 68, 0.92);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-bottom-color: rgba(255,255,255,0.08);
+    box-shadow: 0 8px 24px -12px rgba(9,11,14,0.35);
+  }
+  .topbar-inner {
+    max-width: 1440px; margin: 0 auto;
+    height: 88px; padding: 0 48px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .logo img { display: block; height: 32px; width: auto; }
+  .nav { display: flex; gap: 40px; align-items: center; }
+  .nav a {
+    font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.92);
+    display: inline-flex; align-items: center; gap: 4px;
+    transition: color .15s;
+  }
+  .nav a:hover, .nav a.active { color: var(--gold-200); }
+
+  /* Services dropdown */
+  .nav-dropdown { position: relative; display: inline-flex; align-items: center; gap: 2px; }
+  .nav-dropdown-label {
+    font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.92);
+    transition: color .15s ease;
+  }
+  .nav-dropdown-label:hover,
+  .nav-dropdown.open .nav-dropdown-label { color: var(--gold-200); }
+  .nav-dropdown-toggle {
+    background: transparent; border: none; padding: 0; font-family: inherit; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.92);
+    transition: color .15s;
+  }
+  .nav-dropdown-toggle:hover, .nav-dropdown.open .nav-dropdown-toggle { color: var(--gold-200); }
+  .nav-dropdown.open .nav-dropdown-toggle .chev { transform: rotate(180deg); }
+  .nav-dropdown .chev { transition: transform .2s ease; }
+  .nav-dropdown-menu {
+    position: absolute; top: calc(100% + 18px); left: 50%;
+    transform: translate(-50%, -4px);
+    margin: 0; padding: 10px; list-style: none;
+    background: #fff; border: 1px solid var(--gray-200);
+    border-radius: 10px; min-width: 360px;
+    box-shadow: 0 24px 48px -16px rgba(9,11,14,0.22), 0 6px 12px -6px rgba(9,11,14,0.08);
+    opacity: 0; visibility: hidden;
+    transition: opacity .18s, transform .18s, visibility .18s;
+  }
+  .nav-dropdown.open .nav-dropdown-menu { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+  .nav-dropdown-menu::before {
+    content: "";
+    position: absolute; top: -7px; left: 50%; transform: translateX(-50%) rotate(45deg);
+    width: 12px; height: 12px; background: #fff;
+    border-left: 1px solid var(--gray-200); border-top: 1px solid var(--gray-200);
+  }
+  .nav-dropdown-menu a {
+    display: flex; flex-direction: column; gap: 2px;
+    padding: 10px 14px; border-radius: 6px;
+    font-size: 13.5px; font-weight: 500; color: var(--gray-800);
+    transition: background .12s, color .12s;
+  }
+  .nav-dropdown-menu a:hover { background: var(--blue-50); color: var(--blue-700); }
+  .nav-dropdown-menu a .hint {
+    font-size: 11.5px; font-weight: 400; color: var(--gray-500); letter-spacing: 0;
+  }
+  .nav-dropdown-menu a:hover .hint { color: var(--blue-600); }
+
+  .nav-lang { position: relative; padding-left: 24px; margin-left: 4px; border-left: 1px solid rgba(255,255,255,0.25); }
+  .nav-lang-toggle {
+    background: transparent; border: none; padding: 0;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.92);
+    cursor: pointer; transition: color .15s;
+  }
+  .nav-lang-toggle:hover { color: var(--gold-200); }
+  .nav-lang.open .nav-lang-toggle .chev { transform: rotate(180deg); }
+  .nav-lang .chev { transition: transform .18s; }
+  .nav-lang-menu {
+    position: absolute; top: calc(100% + 12px); right: 0;
+    margin: 0; padding: 6px; list-style: none;
+    background: #fff; border: 1px solid var(--gray-200);
+    border-radius: 8px; min-width: 140px;
+    box-shadow: 0 16px 32px -12px rgba(9,11,14,0.18);
+    opacity: 0; visibility: hidden; transform: translateY(-4px);
+    transition: opacity .15s, transform .15s, visibility .15s;
+  }
+  .nav-lang.open .nav-lang-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+  .nav-lang-menu li {
+    padding: 9px 12px; font-size: 13px; font-weight: 500;
+    color: var(--gray-700); border-radius: 4px; cursor: pointer;
+    transition: background .12s, color .12s;
+  }
+  .nav-lang-menu li:hover { background: var(--blue-50); color: var(--blue-700); }
+  .nav-lang-menu li.active { color: var(--blue-700); font-weight: 600; }
+  .chev { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2; fill: none; }
+
+  /* HERO (interior, shorter) */
+  .page-hero {
+    position: relative; height: 480px; overflow: hidden;
+    display: grid; place-items: center;
+    color: #fff;
+    isolation: isolate;
+  }
+  .page-hero::before {
+    content: "";
+    position: absolute; inset: 0; z-index: -2;
+    background-image:
+      linear-gradient(180deg, rgba(13,29,53,0.55) 0%, rgba(13,29,53,0.75) 100%),
+      url('images/cityscape-aerial.jpg');
+    background-size: cover; background-position: center;
+  }
+  .page-hero-content {
+    text-align: center; padding: 60px 40px 0; max-width: 860px;
+  }
+  .breadcrumb {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold-200);
+    margin-bottom: 20px;
+  }
+  .breadcrumb a { color: rgba(255,255,255,0.7); transition: color .15s; }
+  .breadcrumb a:hover { color: #fff; }
+  .breadcrumb .sep { color: rgba(255,255,255,0.4); }
+  .page-hero h1 {
+    margin: 0;
+    font-family: 'Inter'; font-weight: 700;
+    font-size: 56px; line-height: 1.05; letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  .page-hero h1 em { font-style: normal; color: var(--gold-200); font-weight: 400; }
+  .page-hero .kicker {
+    margin-top: 20px;
+    font-size: 17px; line-height: 1.6; opacity: 0.88;
+    max-width: 620px; margin-left: auto; margin-right: auto;
+  }
+
+  /* WHO WE ARE */
+  .who {
+    padding: 120px 0;
+    background: #fff;
+  }
+  .who-inner {
+    max-width: 1200px; margin: 0 auto; padding: 0 48px;
+    display: grid; grid-template-columns: 380px 1fr; gap: 96px;
+    align-items: start;
+  }
+  .who-eyebrow {
+    font-family: 'Inter'; font-weight: 600;
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gold-400); margin-bottom: 20px;
+  }
+  .who-title {
+    font-family: 'Roboto'; font-weight: 400;
+    font-size: 44px; line-height: 1.1; letter-spacing: -0.01em;
+    color: var(--blue-900); margin: 0 0 0;
+  }
+  .who-title em { font-style: normal; color: var(--gold-500); font-weight: 400; }
+  .who-body { font-size: 16px; color: var(--gray-700); line-height: 1.8; }
+  .who-body p { margin: 0 0 18px; }
+  .who-body p:last-child { margin-bottom: 0; }
+  .who-body strong { color: var(--blue-900); font-weight: 600; }
+  .who-stats {
+    margin-top: 48px;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    border-top: 1px solid var(--gray-200); padding-top: 32px;
+  }
+  .who-stat-num {
+    font-family: 'Roboto'; font-weight: 300;
+    font-size: 48px; line-height: 1; color: var(--blue-900);
+    letter-spacing: -0.02em;
+  }
+  .who-stat-num .plus { color: var(--gold-400); margin-left: 2px; }
+  .who-stat-label {
+    margin-top: 8px; font-size: 13px; font-weight: 500;
+    color: var(--gray-600); letter-spacing: 0.04em;
+  }
+
+  /* TEAM */
+  .team {
+    padding: 100px 0 140px;
+    background: var(--gray-50);
+  }
+  .team-inner {
+    max-width: 1200px; margin: 0 auto; padding: 0 48px;
+  }
+  .team-head {
+    text-align: center; max-width: 680px; margin: 0 auto 72px;
+  }
+  .team-eyebrow {
+    font-family: 'Inter'; font-weight: 600;
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gold-400); margin-bottom: 16px;
+  }
+  .team-head h2 {
+    font-family: 'Roboto'; font-weight: 400;
+    font-size: 40px; line-height: 1.15;
+    color: var(--blue-900); letter-spacing: -0.01em; margin: 0 0 16px;
+  }
+  .team-head p {
+    font-size: 16px; color: var(--gray-600); margin: 0;
+  }
+
+  .office-group + .office-group { margin-top: 96px; }
+  .office-head {
+    display: flex; align-items: baseline; gap: 20px;
+    padding-bottom: 20px; margin-bottom: 40px;
+    border-bottom: 1px solid var(--gray-200);
+  }
+  .office-flag {
+    font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase;
+    font-weight: 600; color: var(--gold-500);
+  }
+  .office-name {
+    font-family: 'Roboto'; font-weight: 400;
+    font-size: 28px; color: var(--blue-900);
+    letter-spacing: -0.01em;
+  }
+  .office-count {
+    margin-left: auto; font-size: 13px; color: var(--gray-500);
+  }
+
+  .team-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+  }
+  .member-card {
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: 4px; overflow: hidden;
+    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    display: flex; flex-direction: column;
+  }
+  .member-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 40px -16px rgba(9,11,14,0.18), 0 4px 12px -4px rgba(9,11,14,0.08);
+    border-color: var(--gray-300);
+  }
+  .member-photo {
+    aspect-ratio: 4 / 5;
+    background: linear-gradient(180deg, var(--blue-800) 0%, var(--blue-900) 100%);
+    position: relative; overflow: hidden;
+    display: grid; place-items: center;
+  }
+  .member-photo::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at top, rgba(191,163,115,0.18) 0%, transparent 55%),
+      radial-gradient(ellipse at bottom right, rgba(42,100,182,0.28) 0%, transparent 60%);
+  }
+  .member-photo img {
+    position: relative; z-index: 1;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .member-photo .initials {
+    position: relative; z-index: 1;
+    font-family: 'Roboto'; font-weight: 300;
+    font-size: 64px; color: var(--gold-200);
+    letter-spacing: 0.04em;
+  }
+  .member-photo .placeholder-tag {
+    position: absolute; top: 14px; left: 14px; z-index: 2;
+    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    padding: 4px 8px; border: 1px solid rgba(255,255,255,0.18); border-radius: 2px;
+    font-weight: 500;
+  }
+  .member-body {
+    padding: 24px 24px 28px;
+    display: flex; flex-direction: column; flex: 1;
+  }
+  .member-name {
+    font-family: 'Roboto'; font-weight: 500;
+    font-size: 22px; line-height: 1.2;
+    color: var(--blue-900); letter-spacing: -0.01em;
+    margin: 0 0 6px;
+  }
+  .member-role {
+    font-size: 13px; color: var(--gold-600); font-weight: 600;
+    letter-spacing: 0.02em; margin: 0 0 16px;
+  }
+  .member-meta {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px;
+  }
+  .chip {
+    font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+    font-weight: 600; color: var(--blue-700);
+    background: var(--blue-50);
+    padding: 4px 8px; border-radius: 2px;
+  }
+  .chip.chip-gold { color: var(--gold-700); background: var(--gold-100); }
+  .member-bio-short {
+    font-size: 14px; color: var(--gray-600); line-height: 1.65;
+    margin: 0 0 16px;
+  }
+  .member-bio-full {
+    font-size: 14px; color: var(--gray-700); line-height: 1.7;
+    max-height: 0; opacity: 0; overflow: hidden;
+    transition: max-height .35s ease, opacity .35s ease, margin .35s ease;
+    margin: 0;
+  }
+  .member-card.is-open .member-bio-full {
+    max-height: 600px; opacity: 1; margin: 0 0 16px;
+  }
+  .member-bio-full p { margin: 0 0 10px; }
+  .member-bio-full p:last-child { margin-bottom: 0; }
+  .member-actions {
+    margin-top: auto;
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 12px; border-top: 1px solid var(--gray-100);
+  }
+  .member-toggle {
+    background: transparent; border: none; padding: 0;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; font-weight: 600; color: var(--blue-700);
+    letter-spacing: 0.02em;
+    transition: color .15s;
+  }
+  .member-toggle:hover { color: var(--blue-900); }
+  .member-toggle .chev { transition: transform .2s ease; }
+  .member-card.is-open .member-toggle .chev { transform: rotate(180deg); }
+  .member-social { display: flex; gap: 10px; }
+  .member-email {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12.5px; color: var(--gray-500);
+    margin-bottom: 12px;
+    transition: color .15s;
+  }
+  .member-email:hover { color: var(--blue-700); }
+  .member-email svg { width: 12px; height: 12px; flex-shrink: 0; }
+  .member-social-link {
+    width: 30px; height: 30px; border-radius: 50%;
+    display: grid; place-items: center;
+    color: var(--blue-700); background: var(--blue-50);
+    border: 1px solid var(--blue-100);
+    transition: background .15s, color .15s;
+  }
+  .member-social-link:hover { background: var(--blue-700); color: #fff; }
+  .member-social-link svg { width: 13px; height: 13px; }
+
+  /* TEAM MODAL */
+  .team-modal-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(9,11,14,0.55);
+    backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+    opacity: 0; visibility: hidden;
+    transition: opacity .22s ease, visibility .22s ease;
+  }
+  .team-modal-overlay.is-open { opacity: 1; visibility: visible; }
+  .team-modal {
+    background: #fff; border-radius: 8px;
+    width: 100%; max-width: 700px;
+    max-height: 90vh; overflow-y: auto;
+    display: grid; grid-template-columns: 220px 1fr;
+    box-shadow: 0 32px 80px -24px rgba(9,11,14,0.38);
+    transform: translateY(12px);
+    transition: transform .22s ease;
+    position: relative;
+  }
+  .team-modal-overlay.is-open .team-modal { transform: translateY(0); }
+  .team-modal-photo {
+    background: linear-gradient(180deg, var(--blue-800) 0%, var(--blue-900) 100%);
+    position: relative; overflow: hidden;
+    display: grid; place-items: center;
+    min-height: 280px;
+  }
+  .team-modal-photo::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at top, rgba(191,163,115,0.18) 0%, transparent 55%),
+      radial-gradient(ellipse at bottom right, rgba(42,100,182,0.28) 0%, transparent 60%);
+  }
+  .team-modal-photo img {
+    position: relative; z-index: 1;
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .team-modal-photo .initials {
+    position: relative; z-index: 1;
+    font-family: 'Roboto'; font-weight: 300;
+    font-size: 64px; color: var(--gold-200); letter-spacing: 0.04em;
+  }
+  .team-modal-body {
+    padding: 36px 32px 32px;
+    display: flex; flex-direction: column; gap: 0;
+    overflow-y: auto;
+  }
+  .team-modal-close {
+    position: absolute; top: 14px; right: 14px;
+    background: rgba(255,255,255,0.15); border: none; border-radius: 50%;
+    width: 32px; height: 32px; display: grid; place-items: center;
+    cursor: pointer; color: #fff; z-index: 10;
+    transition: background .15s;
+  }
+  .team-modal-close:hover { background: rgba(255,255,255,0.3); }
+  .team-modal-close svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 2; fill: none; }
+  .team-modal-name {
+    font-family: 'Roboto'; font-weight: 500;
+    font-size: 26px; line-height: 1.15; letter-spacing: -0.01em;
+    color: var(--blue-900); margin: 0 0 6px;
+  }
+  .team-modal-role {
+    font-size: 13px; color: var(--gold-600); font-weight: 600;
+    letter-spacing: 0.04em; margin: 0 0 16px;
+  }
+  .team-modal-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+  .team-modal-bio {
+    font-size: 14.5px; line-height: 1.8; color: var(--gray-700);
+    display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px;
+  }
+  .team-modal-bio p { margin: 0; }
+  .team-modal-divider { height: 1px; background: var(--gray-200); margin-bottom: 20px; }
+  .team-modal-contacts { display: flex; flex-direction: column; gap: 10px; }
+  .team-modal-contact-item {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 13.5px; color: var(--blue-700);
+    font-weight: 500; transition: color .15s;
+  }
+  .team-modal-contact-item:hover { color: var(--blue-900); }
+  .team-modal-contact-item svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+  /* CTA */
+  .cta {
+    padding: 100px 0;
+    background: var(--blue-900); color: #fff;
+    text-align: center;
+  }
+  .cta-inner {
+    max-width: 720px; margin: 0 auto; padding: 0 48px;
+  }
+  .cta h2 {
+    font-family: 'Roboto'; font-weight: 400;
+    font-size: 40px; line-height: 1.15;
+    margin: 0 0 16px; letter-spacing: -0.01em;
+  }
+  .cta h2 em { font-style: normal; color: var(--gold-200); font-weight: 400; }
+  .cta p {
+    font-size: 16px; opacity: 0.82; margin: 0 0 32px;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 14px; font-weight: 600; line-height: 1;
+    padding: 13px 22px; border-radius: 6px;
+    transition: background .15s, color .15s, border-color .15s;
+  }
+  .btn-primary {
+    background: var(--gold-400); color: var(--blue-900);
+    border: 1px solid var(--gold-400);
+  }
+  .btn-primary:hover { background: var(--gold-500); border-color: var(--gold-500); }
+  .btn .arrow { transition: transform .18s ease; }
+  .btn:hover .arrow { transform: translateX(3px); }
+
+  /* FOOTER */
+    .footer {
+    background: var(--blue-950);
+    background-image: linear-gradient(rgba(8,20,50,0.82), rgba(8,20,50,0.82)), url('images/skyline-downtown-new-york-new-york-usa.jpg');
+    background-size: cover; background-position: center;
+    color: #fff; padding: 80px 0 32px;
+    position: relative; overflow: hidden;
+  }
+  .footer::before {
+    content: ""; position: absolute; inset: 0;
+    background: repeating-linear-gradient(45deg, transparent 0 60px, rgba(255,255,255,0.02) 60px 61px);
+    pointer-events: none;
+  }
+  .footer-inner { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+  .footer-cols {
+    display: grid; grid-template-columns: 1fr 1fr 1fr 1.4fr;
+    gap: 48px; padding-bottom: 56px;
+  }
+  .footer-col h4 {
+    margin: 0 0 20px;
+    font-family: 'Roboto'; font-weight: 700; font-size: 11px;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--gold-200);
+  }
+  .footer-col a {
+    display: block; padding: 4px 0;
+    font-size: 14px; color: rgba(255,255,255,0.85);
+    transition: color .15s;
+  }
+  .footer-col a:hover { color: var(--gold-200); }
+  .footer-col-map { position: relative; min-height: 140px; }
+  .footer-col-map .map-wrap { position: absolute; inset: 0; overflow: hidden; }
+  .footer-col-map .map-wrap img {
+    width: 130%; height: auto;
+    position: absolute; top: 50%; left: -10%;
+    transform: translateY(-50%); opacity: 0.55;
+  }
+  .footer-col-map .map-wrap svg {
+    position: absolute; top: 50%; left: -10%;
+    transform: translateY(-50%);
+    width: 130%; height: auto; overflow: visible;
+  }
+  .footer-divider { height: 1px; background: rgba(255,255,255,0.15); margin: 0 0 24px; }
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center; gap: 24px;
+  }
+  .footer-nav { display: flex; gap: 28px; }
+  .footer-nav a {
+    font-size: 13px; color: rgba(255,255,255,0.7);
+    transition: color .15s; display: inline-flex; align-items: center; gap: 6px;
+  }
+  .footer-nav a:hover { color: #fff; }
+  .footer-copy { font-size: 13px; color: rgba(255,255,255,0.6); }
+  .footer-brand img { display: block; height: 28px; width: auto; opacity: 0.95; }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="Home.html" class="logo" aria-label="Equijust home">
+      <img src="images/logo-white.svg" alt="Equijust" width="114" height="32" />
+    </a>
+    <nav class="nav">
+      <a href="About.html" class="active">About us
+        <svg class="chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </a>
+      <div class="nav-dropdown" id="svcDropdown">
+        <a href="Services.html" class="nav-dropdown-label">Services</a>
+        <button class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+          <svg class="chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <ul class="nav-dropdown-menu" role="menu"></ul>
+      </div>
+      <a href="Contact.html">Contact</a>
+      <div class="nav-lang" id="navLang">
+        <button class="nav-lang-toggle" aria-haspopup="listbox" aria-expanded="false">
+          <span class="nav-lang-current">En</span>
+          <svg class="chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <ul class="nav-lang-menu" role="listbox">
+          <li role="option" data-lang="en" class="active">English</li>
+          <li role="option" data-lang="es">Español</li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="page-hero-content">
+    <div class="breadcrumb">
+      <a href="Home.html">Home</a>
+      <span class="sep">/</span>
+      <span>About us</span>
+    </div>
+    <h1>Three decades <em>of trust,</em> precision <em>and expertise.</em></h1>
+    <p class="kicker">An independent firm of loss adjusters built on relationships, technical rigour and an instinct for getting complex claims right.</p>
+  </div>
+</section>
+
+<!-- WHO WE ARE -->
+<section class="who">
+  <div class="who-inner">
+    <div>
+      <div class="who-eyebrow">Who we are</div>
+      <h2 class="who-title">An independent <em>voice</em> in international claims management.</h2>
+    </div>
+    <div>
+      <div class="who-body">
+        <p>Equijust was founded in 1996 with a simple conviction: that complex claims deserve specialists who understand both the technical detail and the human context behind every loss. Nearly thirty years on, that conviction still shapes how we work.</p>
+        <p>We are a firm of loss adjusters focused on <strong>financial lines, professional risks, commercial crime, cyber and specialty insurance</strong>. From our offices in London, Miami and Bogotá &mdash; and through a trusted network of partners across the globe &mdash; we handle claims that span jurisdictions, languages and legal systems.</p>
+        <p>Independence matters to us. It is what lets us give insurers, reinsurers and their clients an honest technical view, free from conflict and built on experience earned case by case.</p>
+      </div>
+      <div class="who-stats">
+        <div>
+          <div class="who-stat-num">30<span class="plus">+</span></div>
+          <div class="who-stat-label">Years of practice</div>
+        </div>
+        <div>
+          <div class="who-stat-num">3</div>
+          <div class="who-stat-label">Offices worldwide</div>
+        </div>
+        <div>
+          <div class="who-stat-num">9</div>
+          <div class="who-stat-label">Senior specialists</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team">
+  <div class="team-inner">
+    <div class="team-head">
+      <div class="team-eyebrow">Our team</div>
+      <h2>The people behind every claim.</h2>
+      <p>Ten senior adjusters, lawyers and specialists based across London, Miami and Bogotá &mdash; working in English, Spanish and Portuguese.</p>
+    </div>
+
+    <!-- LONDON -->
+    <div class="office-group">
+      <div class="office-head">
+        <div class="office-flag">London · UK</div>
+        <div class="office-name">Head office</div>
+        <div class="office-count">4 specialists</div>
+      </div>
+      <div class="team-grid" data-office="london"></div>
+    </div>
+
+    <!-- MIAMI -->
+    <div class="office-group">
+      <div class="office-head">
+        <div class="office-flag">Miami · USA</div>
+        <div class="office-name">The Americas</div>
+        <div class="office-count">3 specialists</div>
+      </div>
+      <div class="team-grid" data-office="miami"></div>
+    </div>
+
+    <!-- BOGOTÁ -->
+    <div class="office-group">
+      <div class="office-head">
+        <div class="office-flag">Bogotá · CO</div>
+        <div class="office-name">Latin America</div>
+        <div class="office-count">2 specialists</div>
+      </div>
+      <div class="team-grid" data-office="bogota"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="cta-inner">
+    <h2>Have a complex claim <em>on your desk?</em></h2>
+    <p>Talk to us about how we can help — our teams in London, Miami and Bogotá respond in the language and jurisdiction you need.</p>
+    <a href="Contact.html" class="btn btn-primary">Get in touch
+      <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h4>About Us</h4>
+        <a href="About.html">Who We Are</a>
+        <a href="About.html#team">Our Team</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="Contact.html">Contact Us</a>
+        <a href="#">Offices</a>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <a href="Services.html#financial-lines">Financial Lines &amp; Professional Risks</a>
+        <a href="Services.html#cyber">Cyber Insurance</a>
+        <a href="Services.html#commercial-crime">Commercial Crime Risks</a>
+        <a href="Services.html#casualty">Commercial Liability &amp; Casualty</a>
+        <a href="Services.html#specialty">Specialty Insurance</a>
+        <a href="Services.html#specie">Specie &amp; High-Value Goods</a>
+        <a href="Services.html#financial-lines">Pre-Loss Consultancy &amp; Risk Assessment</a>
+      </div>
+      <div class="footer-col footer-col-map">
+        <div class="map-wrap">
+          <img src="images/world-map.svg" alt="" aria-hidden="true" />
+          <svg viewBox="0 0 382 152" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="191" cy="33" r="4" fill="#BFA373"/>
+            <circle cx="191" cy="33" r="2" fill="#fff"/>
+            <circle cx="106" cy="54" r="4" fill="#BFA373"/>
+            <circle cx="106" cy="54" r="2" fill="#fff"/>
+            <circle cx="112" cy="72" r="4" fill="#BFA373"/>
+            <circle cx="112" cy="72" r="2" fill="#fff"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-bottom">
+      <div class="footer-nav">
+        <a href="Privacy-Policy.html">Privacy Policy</a>
+        <a href="https://www.linkedin.com/company/equijust-inc./" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zM6.814 20.452H3.854V9h2.96v11.452z"/></svg>
+          LinkedIn
+        </a>
+      </div>
+      <div class="footer-copy">© 2026 Equijust. All rights reserved.</div>
+      <div class="footer-brand"><img src="images/logo-white.svg" alt="Equijust" width="114" height="32" /></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* Equijust — Team data (sourced from EQUIJUST_Equipo.md) */
+window.TEAM = {
+  london: [
+    {
+      name: 'Bill Parry',
+      role: 'Director · Co-founder',
+      photo: 'images/team/bill-parry.png',
+      languages: ['EN', 'ES'],
+      linkedin: 'https://www.linkedin.com/in/bill-parry-173ba517/',
+      email: 'bill.parry@equijust.com',
+      short: 'Founding member of Equijust since 1996. Handles claims across Europe, the Middle East and Asia-Pacific.',
+      bio: [
+        "Bill Parry is one of Equijust's founding members, having launched the firm in 1996. He began his insurance career as an international reinsurance underwriter before moving into loss adjusting in 1992.",
+        "He now handles claims across Europe, the Middle East and Asia-Pacific, and is fluent in Spanish with extensive experience across Latin America."
+      ]
+    },
+    {
+      name: 'Nigel Perkins',
+      role: 'Director',
+      photo: 'images/team/nigel-perkins.png',
+      languages: ['EN'],
+      linkedin: 'https://www.linkedin.com/in/nigel-perkins-b7126764/',
+      email: 'nigel.perkins@equijust.com',
+      short: 'ACII, ACILA and a Diploma in Law. Director since 2012, handling international claims from London.',
+      bio: [
+        "Nigel Perkins joined Equijust in 1999. He holds ACII and ACILA qualifications, a Diploma in Law and a Certificate in Legal Practice.",
+        "Based in London and a director since 2012, he handles international claims with a focus on Europe, the Middle East, Africa and Asia-Pacific."
+      ]
+    },
+    {
+      name: 'Jamie Mackenzie',
+      role: 'Director',
+      photo: 'images/team/jamie-mackenzie.png',
+      languages: ['EN'],
+      linkedin: 'https://www.linkedin.com/in/jamie-mackenzie-97999454/',
+      email: 'gdpr.owner@equijust.com',
+      short: 'St. Andrews graduate, director since 2012. Focused on financial institutions, cyber and professional liability.',
+      bio: [
+        "Jamie Mackenzie, a graduate of the University of St. Andrews, joined the firm in 1999 and was appointed director in 2012.",
+        "Based in London, he handles predominantly financial institutions, commercial crime, cyber and professional liability claims across the UK, the Middle East, Eastern Europe and the Far East."
+      ]
+    },
+    {
+      name: 'Simon Bailey',
+      role: 'Director',
+      photo: 'images/team/simon-bailey.jpg',
+      languages: ['EN', 'ES'],
+      linkedin: 'https://www.linkedin.com/in/simon-bailey-424b74b9/',
+      email: 'simon.bailey@equijust.com',
+      short: "20 years' experience across Latin America, the Caribbean and Sub-Saharan Africa. King's College London (honours).",
+      bio: [
+        "Simon Bailey graduated with honours from King's College London and has 20 years of experience adjusting financial institutions, cyber, PI and D&O claims — primarily across Latin America and the Caribbean but also in Sub-Saharan Africa.",
+        "He is fluent in Spanish and is based at the firm's main London offices."
+      ]
+    }
+  ],
+  miami: [
+    {
+      name: 'Anton Kidd',
+      role: 'Director · Co-founder',
+      photo: 'images/team/anton-kidd.jpg',
+      languages: ['EN', 'ES'],
+      linkedin: 'https://www.linkedin.com/in/anton-kidd-690b261/',
+      email: 'anton.kidd@equijust.com',
+      short: 'Founding partner and director since 1996. ACII and ACILA. Specialist in complex claims across the Americas.',
+      bio: [
+        "Anton Kidd is a founding partner and director of Equijust since 1996. Previously he managed a major international adjuster's office in Bogotá from 1991 to 1996.",
+        "He holds a degree in History and ACII and ACILA qualifications, speaks Spanish fluently, and has handled some of the most complex financial institutions claims in the Americas and the Caribbean."
+      ]
+    },
+    {
+      name: 'Daniel McNamara',
+      role: 'Director',
+      photo: 'images/team/daniel-mcnamara.jpg',
+      languages: ['EN', 'ES', 'PT'],
+      linkedin: 'https://www.linkedin.com/in/daniel-mcnamara-91b5931b/',
+      email: 'daniel.mcnamara@equijust.com',
+      short: 'MBA (University of Florida), licensed Property & Casualty Adjuster in Florida. Trilingual across EN · ES · PT.',
+      bio: [
+        "Daniel McNamara joined Equijust from a major insurance broking firm in June 2003. He holds degrees in Economics and Political Science and an MBA from the University of Florida.",
+        "Appointed director in March 2018, he is trilingual (English, Spanish, Portuguese) and handles predominantly Latin American claims — including Brazil — along with cases in the United States and the Caribbean. He is a licensed Property & Casualty Adjuster in the State of Florida."
+      ]
+    },
+    {
+      name: 'Johanna Sarmiento',
+      role: 'Administration · Client Service',
+      photo: 'images/team/johanna-sarmiento.jpg',
+      languages: ['EN', 'ES'],
+      linkedin: 'https://www.linkedin.com/in/johanna-sarmiento/',
+      email: 'johanna.sarmiento@equijust.com',
+      short: "Business Administration graduate with 10+ years' experience in client service, administration and accounts.",
+      bio: [
+        "Johanna Sarmiento joined Equijust in December 2017. She holds a degree in Business Administration and brings extensive experience across administrative and accounting functions, together with more than ten years in client service."
+      ]
+    }
+  ],
+  bogota: [
+    {
+      name: 'Carolina Cuellar',
+      role: 'Lawyer · Anti-Fraud Specialist',
+      photo: 'images/team/carolina-cuellar.jpg',
+      languages: ['EN', 'ES'],
+      linkedin: 'https://www.linkedin.com/in/carolina-cuellar-7534395/',
+      email: 'carolina.cuellar@equijust.com',
+      short: 'Qualified lawyer and ACFS-accredited anti-fraud specialist. Financial crime and asset recovery across LatAm.',
+      bio: [
+        "Carolina Cuellar is a qualified lawyer and ACFS-accredited anti-fraud specialist (accredited in London). She specialises in international business, with deep experience in financial crime and fraud investigations, asset tracing and recovery, and multi-jurisdictional litigation.",
+        "She joined Equijust in 2015, after working in London with one of the Big Four consulting and audit firms as well as another loss adjusting firm. She handles financial institutions and commercial crime claims, along with professional indemnity and D&O matters across Latin America and the Caribbean."
+      ]
+    },
+    {
+      name: 'Stephanie Gutiérrez',
+      role: 'Lawyer · Insurance & Social Security',
+      photo: 'images/team/stephanie-gutierrez.jpg',
+      languages: ['ES'],
+      linkedin: 'https://www.linkedin.com/in/stephanie-guti%C3%A9rrez-munar-500b94141/',
+      email: 'stephanie.gutierrez@equijust.com',
+      short: '10 years in the insurance sector. Liability and financial lines across Latin America.',
+      bio: [
+        "Stephanie Gutiérrez is a lawyer specialising in Insurance and Social Security, with ten years of experience across the insurance sector — working for both insurers and loss adjusters.",
+        "Her focus is the handling and management of claims involving Civil Liability and Financial Lines across Latin America."
+      ]
+    }
+  ]
+};
+
+</script>
+
+<!-- TEAM MODAL -->
+<div class="team-modal-overlay" id="teamModal" role="dialog" aria-modal="true">
+  <div class="team-modal">
+    <button class="team-modal-close" aria-label="Close">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="team-modal-photo"></div>
+    <div class="team-modal-body">
+      <h2 class="team-modal-name"></h2>
+      <div class="team-modal-role"></div>
+      <div class="team-modal-chips"></div>
+      <div class="team-modal-bio"></div>
+      <div class="team-modal-divider"></div>
+      <div class="team-modal-contacts"></div>
+    </div>
+  </div>
+</div>
+
+<script src="services-data.js"></script>
+<script>
+  /* Topbar scroll state */
+  (function () {
+    const bar = document.querySelector('.topbar');
+    const onScroll = () => bar.classList.toggle('is-scrolled', window.scrollY > 40);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+
+  /* Services dropdown */
+  (function () {
+    if (!window.SERVICES) return;
+    const wrap = document.getElementById('svcDropdown');
+    if (!wrap) return;
+    const menu = wrap.querySelector('.nav-dropdown-menu');
+    const toggle = wrap.querySelector('.nav-dropdown-toggle');
+    menu.innerHTML = window.SERVICES.map((s, i) => `
+      <li role="none">
+        <a role="menuitem" href="Services.html#${s.slug}">
+          <span>${String(i + 1).padStart(2, '0')} · ${s.name}</span>
+          <span class="hint">${s.hint}</span>
+        </a>
+      </li>
+    `).join('');
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const o = wrap.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', o ? 'true' : 'false');
+    });
+    document.addEventListener('click', (e) => {
+      if (!wrap.contains(e.target)) wrap.classList.remove('open');
+    });
+  })();
+
+  /* Language switcher */
+  (function () {
+    const wrap = document.getElementById('navLang');
+    if (!wrap) return;
+    const toggle = wrap.querySelector('.nav-lang-toggle');
+    const current = wrap.querySelector('.nav-lang-current');
+    const items = wrap.querySelectorAll('.nav-lang-menu li');
+    const labels = { en: 'En', es: 'Es' };
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = wrap.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    items.forEach(li => {
+      li.addEventListener('click', () => {
+        items.forEach(x => x.classList.remove('active'));
+        li.classList.add('active');
+        current.textContent = labels[li.dataset.lang] || 'En';
+        wrap.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+    document.addEventListener('click', (e) => {
+      if (!wrap.contains(e.target)) {
+        wrap.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  })();
+
+  /* Team rendering + modal */
+  (function () {
+    if (!window.TEAM) return;
+    const escape = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const initials = name => name.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase();
+    const linkedinIcon = '<svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zM6.814 20.452H3.854V9h2.96v11.452z"/></svg>';
+    const emailIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>';
+
+    const cardHTML = m => {
+      const photoHTML = m.photo
+        ? `<img src="${escape(m.photo)}" alt="${escape(m.name)}" loading="lazy" />`
+        : `<span class="placeholder-tag">Photo TBD</span><span class="initials">${initials(m.name)}</span>`;
+      const linkedinBtn = m.linkedin
+        ? `<a href="${escape(m.linkedin)}" target="_blank" rel="noopener" aria-label="LinkedIn" class="member-social-link" onclick="event.stopPropagation()">${linkedinIcon}</a>`
+        : '';
+      const emailLine = m.email
+        ? `<a href="mailto:${escape(m.email)}" class="member-email" onclick="event.stopPropagation()">${emailIcon} ${escape(m.email)}</a>`
+        : '';
+      return `
+        <article class="member-card" role="button" tabindex="0"
+          data-name="${escape(m.name)}"
+          data-role="${escape(m.role)}"
+          data-photo="${escape(m.photo || '')}"
+          data-languages="${escape(JSON.stringify(m.languages || []))}"
+          data-bio="${escape(JSON.stringify(m.bio || []))}"
+          data-linkedin="${escape(m.linkedin || '')}"
+          data-email="${escape(m.email || '')}">
+          <div class="member-photo">${photoHTML}</div>
+          <div class="member-body">
+            <h3 class="member-name">${escape(m.name)}</h3>
+            <div class="member-role">${escape(m.role)}</div>
+            ${emailLine}
+            <p class="member-bio-short">${escape(m.short)}</p>
+            <div class="member-actions">
+              <button class="member-toggle">
+                <span class="label">Read full bio</span>
+                <svg class="chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <div class="member-social">${linkedinBtn}</div>
+            </div>
+          </div>
+        </article>`;
+    };
+
+    document.querySelectorAll('.team-grid[data-office]').forEach(grid => {
+      const office = grid.dataset.office;
+      grid.innerHTML = (window.TEAM[office] || []).map(cardHTML).join('');
+    });
+
+    /* Modal logic */
+    const overlay = document.getElementById('teamModal');
+    const modalPhoto = overlay.querySelector('.team-modal-photo');
+    const modalName = overlay.querySelector('.team-modal-name');
+    const modalRole = overlay.querySelector('.team-modal-role');
+    const modalChips = overlay.querySelector('.team-modal-chips');
+    const modalBio = overlay.querySelector('.team-modal-bio');
+    const modalContacts = overlay.querySelector('.team-modal-contacts');
+
+    const openModal = card => {
+      const name = card.dataset.name;
+      const role = card.dataset.role;
+      const photo = card.dataset.photo;
+      const langs = JSON.parse(card.dataset.languages || '[]');
+      const bio = JSON.parse(card.dataset.bio || '[]');
+      const linkedin = card.dataset.linkedin;
+      const email = card.dataset.email;
+
+      // Photo
+      modalPhoto.innerHTML = photo
+        ? `<img src="${photo}" alt="${name}" />`
+        : `<span class="initials">${name.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase()}</span>`;
+
+      modalName.textContent = name;
+      modalRole.textContent = role;
+      modalChips.innerHTML = langs.map(l => `<span class="chip chip-gold">${l}</span>`).join('');
+      modalBio.innerHTML = bio.map(p => `<p>${p}</p>`).join('');
+
+      // Contacts: LinkedIn + email
+      let contactsHTML = '';
+      if (linkedin) contactsHTML += `<a href="${linkedin}" target="_blank" rel="noopener" class="team-modal-contact-item">${linkedinIcon} ${linkedin.replace('https://www.linkedin.com/in/', 'linkedin.com/in/')}</a>`;
+      if (email) contactsHTML += `<a href="mailto:${email}" class="team-modal-contact-item">${emailIcon} ${email}</a>`;
+      modalContacts.innerHTML = contactsHTML;
+
+      overlay.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    };
+
+    const closeModal = () => {
+      overlay.classList.remove('is-open');
+      document.body.style.overflow = '';
+    };
+
+    document.querySelectorAll('.member-card').forEach(card => {
+      card.addEventListener('click', () => openModal(card));
+      card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(card); } });
+    });
+
+    overlay.querySelector('.team-modal-close').addEventListener('click', closeModal);
+    overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  })();
+</script>
+
+
+</body>
+</html>

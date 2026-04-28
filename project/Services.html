@@ -1,0 +1,723 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1440" />
+<title>Equijust — Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Roboto:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue-50:#F2F6FC; --blue-100:#E9EBF8; --blue-200:#CFDAEE; --blue-300:#A9BFDC;
+    --blue-400:#7C9CC7; --blue-500:#4F7FB7; --blue-600:#2A64B6; --blue-700:#245497;
+    --blue-800:#16325B; --blue-900:#112644; --blue-950:#0D1D35;
+    --gold-100:#F5EEDB; --gold-200:#EBE2CE; --gold-400:#BFA373; --gold-500:#A8894F;
+    --gold-600:#90784A; --gold-700:#6E5B38;
+    --gray-50:#F9FAFB; --gray-100:#F4F4F5; --gray-200:#E4E4E7; --gray-300:#D4D4D8;
+    --gray-400:#A1A1AA; --gray-500:#71717A; --gray-600:#52525B; --gray-700:#3F3F46;
+    --gray-800:#27272A; --gray-900:#18181B;
+    --ink:#09090E;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 16px; line-height: 1.7; color: var(--ink); background: #fff;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { display:block; max-width:100%; }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; }
+
+  /* TOPBAR */
+  .topbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    background: transparent;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    transition: background-color .25s ease, border-color .25s ease, box-shadow .25s ease;
+  }
+  .topbar.is-scrolled {
+    background: rgba(17, 38, 68, 0.92);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-bottom-color: rgba(255,255,255,0.08);
+    box-shadow: 0 8px 24px -12px rgba(9,11,14,0.35);
+  }
+  .topbar-inner {
+    max-width: 1440px; margin: 0 auto;
+    height: 88px; padding: 0 48px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .logo img { display: block; height: 32px; width: auto; }
+  .nav { display: flex; gap: 40px; align-items: center; }
+  .nav > a, .nav-dropdown-toggle {
+    font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.92);
+    display: inline-flex; align-items: center; gap: 4px;
+    transition: color .15s;
+    background: transparent; border: none; padding: 0; cursor: pointer;
+    font-family: inherit;
+  }
+  .nav > a:hover, .nav > a.active,
+  .nav-dropdown-toggle:hover, .nav-dropdown.active > .nav-dropdown-toggle { color: var(--gold-200); }
+
+  /* Services dropdown */
+  .nav-dropdown { position: relative; }
+  .nav-dropdown.open .nav-dropdown-toggle .chev { transform: rotate(180deg); }
+  .nav-dropdown .chev { transition: transform .2s ease; }
+  .nav-dropdown-menu {
+    position: absolute; top: calc(100% + 18px); left: 50%;
+    transform: translate(-50%, -4px);
+    margin: 0; padding: 10px; list-style: none;
+    background: #fff; border: 1px solid var(--gray-200);
+    border-radius: 10px; min-width: 340px;
+    box-shadow: 0 24px 48px -16px rgba(9,11,14,0.22), 0 6px 12px -6px rgba(9,11,14,0.08);
+    opacity: 0; visibility: hidden;
+    transition: opacity .18s, transform .18s, visibility .18s;
+  }
+  .nav-dropdown.open .nav-dropdown-menu { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+  .nav-dropdown-menu::before {
+    content: "";
+    position: absolute; top: -7px; left: 50%; transform: translateX(-50%) rotate(45deg);
+    width: 12px; height: 12px; background: #fff;
+    border-left: 1px solid var(--gray-200); border-top: 1px solid var(--gray-200);
+  }
+  .nav-dropdown-menu a {
+    display: flex; flex-direction: column; gap: 2px;
+    padding: 10px 14px; border-radius: 6px;
+    font-size: 13.5px; font-weight: 500; color: var(--gray-800);
+    transition: background .12s, color .12s;
+  }
+  .nav-dropdown-menu a:hover { background: var(--blue-50); color: var(--blue-700); }
+  .nav-dropdown-menu a .hint {
+    font-size: 11.5px; font-weight: 400; color: var(--gray-500); letter-spacing: 0;
+  }
+  .nav-dropdown-menu a:hover .hint { color: var(--blue-600); }
+
+  /* Language switcher */
+  .nav-lang { position: relative; padding-left: 24px; margin-left: 4px; border-left: 1px solid rgba(255,255,255,0.25); }
+  .nav-lang-toggle {
+    background: transparent; border: none; padding: 0;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.92);
+    cursor: pointer; transition: color .15s;
+  }
+  .nav-lang-toggle:hover { color: var(--gold-200); }
+  .nav-lang.open .nav-lang-toggle .chev { transform: rotate(180deg); }
+  .nav-lang .chev { transition: transform .18s; }
+  .nav-lang-menu {
+    position: absolute; top: calc(100% + 12px); right: 0;
+    margin: 0; padding: 6px; list-style: none;
+    background: #fff; border: 1px solid var(--gray-200);
+    border-radius: 8px; min-width: 140px;
+    box-shadow: 0 16px 32px -12px rgba(9,11,14,0.18);
+    opacity: 0; visibility: hidden; transform: translateY(-4px);
+    transition: opacity .15s, transform .15s, visibility .15s;
+  }
+  .nav-lang.open .nav-lang-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+  .nav-lang-menu li {
+    padding: 9px 12px; font-size: 13px; font-weight: 500;
+    color: var(--gray-700); border-radius: 4px; cursor: pointer;
+    transition: background .12s, color .12s;
+  }
+  .nav-lang-menu li:hover { background: var(--blue-50); color: var(--blue-700); }
+  .nav-lang-menu li.active { color: var(--blue-700); font-weight: 600; }
+  .chev { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2; fill: none; }
+
+  /* PAGE HERO */
+  .page-hero {
+    position: relative; height: 480px; overflow: hidden;
+    display: grid; place-items: center;
+    color: #fff;
+    isolation: isolate;
+  }
+  .page-hero::before {
+    content: "";
+    position: absolute; inset: 0; z-index: -2;
+    background-image:
+      linear-gradient(180deg, rgba(13,29,53,0.55) 0%, rgba(13,29,53,0.75) 100%),
+      url('images/briefcases.jpg');
+    background-size: cover; background-position: center;
+  }
+  .page-hero-content {
+    text-align: center; padding: 60px 40px 0; max-width: 860px;
+  }
+  .breadcrumb {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold-200); margin-bottom: 20px;
+  }
+  .breadcrumb a { color: rgba(255,255,255,0.7); transition: color .15s; }
+  .breadcrumb a:hover { color: #fff; }
+  .breadcrumb .sep { color: rgba(255,255,255,0.4); }
+  .page-hero h1 {
+    margin: 0;
+    font-family: 'Inter'; font-weight: 700;
+    font-size: 56px; line-height: 1.05; letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  .page-hero h1 em { font-style: normal; color: var(--gold-200); font-weight: 400; }
+  .page-hero .kicker {
+    margin-top: 20px;
+    font-size: 17px; line-height: 1.6; opacity: 0.88;
+    max-width: 620px; margin-left: auto; margin-right: auto;
+  }
+
+  /* INDEX RAIL */
+  .svc-index {
+    background: #fff;
+    border-bottom: 1px solid var(--gray-200);
+    position: sticky; top: 88px; z-index: 20;
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    background: rgba(255,255,255,0.94);
+  }
+  .svc-index-inner {
+    max-width: 1200px; margin: 0 auto; padding: 0 48px;
+    display: flex; gap: 8px; overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .svc-index-inner::-webkit-scrollbar { display: none; }
+  .svc-index a {
+    padding: 18px 14px;
+    font-size: 13px; font-weight: 500; color: var(--gray-600);
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: color .15s, border-color .15s;
+  }
+  .svc-index a:hover { color: var(--blue-700); }
+  .svc-index a.active {
+    color: var(--blue-900); border-bottom-color: var(--gold-400);
+  }
+  .svc-index-number {
+    display: inline-block; width: 22px; height: 22px; line-height: 22px; text-align: center;
+    border-radius: 50%;
+    background: var(--blue-50); color: var(--blue-700);
+    font-size: 11px; font-weight: 700; margin-right: 8px;
+    transition: background .15s, color .15s;
+  }
+  .svc-index a.active .svc-index-number,
+  .svc-index a:hover .svc-index-number { background: var(--gold-400); color: var(--blue-900); }
+
+  /* INTRO */
+  .svc-intro {
+    padding: 100px 0 60px;
+    max-width: 980px; margin: 0 auto; padding-left: 48px; padding-right: 48px;
+    text-align: center;
+  }
+  .svc-intro-eyebrow {
+    font-family: 'Inter'; font-weight: 600;
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gold-400); margin-bottom: 18px;
+  }
+  .svc-intro h2 {
+    font-family: 'Roboto'; font-weight: 400;
+    font-size: 40px; line-height: 1.15;
+    color: var(--blue-900); letter-spacing: -0.01em;
+    margin: 0 0 22px; text-wrap: balance;
+  }
+  .svc-intro p {
+    font-size: 17px; color: var(--gray-700); line-height: 1.7;
+    margin: 0 auto; max-width: 720px;
+  }
+
+  /* SERVICE BLOCK */
+  .svc-section { scroll-margin-top: 140px; }
+  .svc {
+    padding: 100px 0;
+    max-width: 1200px; margin: 0 auto; padding-left: 48px; padding-right: 48px;
+  }
+  .svc-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    align-items: start;
+  }
+  .svc.reverse .svc-grid { grid-template-columns: 1fr 1fr; }
+  .svc.reverse .svc-media { order: 2; }
+  .svc-media {
+    width: 100%; aspect-ratio: 4 / 5;
+    background: var(--gray-100) center/cover no-repeat;
+    border-radius: 4px;
+    position: relative; overflow: hidden;
+  }
+  .svc-media::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(17,38,68,0.0) 40%, rgba(17,38,68,0.35) 100%);
+  }
+  .svc-media .svc-num {
+    position: absolute; left: 24px; top: 24px; z-index: 1;
+    font-family: 'Roboto'; font-weight: 300;
+    font-size: 64px; color: rgba(255,255,255,0.85);
+    line-height: 1; letter-spacing: -0.02em;
+  }
+  .svc-media .svc-num small {
+    display: block; font-size: 11px; font-weight: 500;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold-200); margin-bottom: 6px;
+  }
+  .svc-content .svc-eyebrow {
+    font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gold-500); margin-bottom: 14px;
+  }
+  .svc-content h2 {
+    font-family: 'Roboto'; font-weight: 400;
+    font-size: 36px; line-height: 1.15;
+    color: var(--blue-900); letter-spacing: -0.01em;
+    margin: 0 0 22px; text-wrap: balance;
+  }
+  .svc-content p.desc {
+    font-size: 16px; color: var(--gray-700); line-height: 1.8;
+    margin: 0 0 32px;
+  }
+
+  .svc-coverage h3, .svc-cases h3 {
+    font-family: 'Inter'; font-weight: 600;
+    font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--blue-900); margin: 0 0 18px;
+    padding-bottom: 10px; border-bottom: 1px solid var(--gray-200);
+  }
+  .svc-coverage { margin-bottom: 36px; }
+  .svc-coverage-list {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .svc-coverage-list li {
+    font-size: 13px; font-weight: 500;
+    color: var(--blue-800);
+    padding: 7px 12px;
+    background: var(--blue-50);
+    border: 1px solid var(--blue-100);
+    border-radius: 4px;
+  }
+
+  .svc-coverage-group + .svc-coverage-group { margin-top: 16px; }
+  .svc-coverage-group-title {
+    font-size: 11.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gold-600); margin-bottom: 10px;
+  }
+
+  .svc-cases-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .svc-cases-head h3 { margin: 0; padding: 0; border: none; }
+  .svc-cases-toggle {
+    background: transparent; border: none; padding: 0;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 600; color: var(--blue-700);
+    letter-spacing: 0.04em;
+    transition: color .15s;
+  }
+  .svc-cases-toggle:hover { color: var(--blue-900); }
+  .svc-cases-toggle .chev { transition: transform .2s ease; }
+  .svc.is-open .svc-cases-toggle .chev { transform: rotate(180deg); }
+
+  .svc-cases-list {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column;
+    border-top: 1px solid var(--gray-200);
+  }
+  .svc-cases-list li {
+    font-size: 14px; color: var(--gray-700); line-height: 1.65;
+    padding: 14px 0 14px 24px;
+    position: relative;
+    border-bottom: 1px solid var(--gray-100);
+  }
+  .svc-cases-list li::before {
+    content: "";
+    position: absolute; left: 0; top: 22px;
+    width: 10px; height: 1px; background: var(--gold-400);
+  }
+
+  .svc-cases-list {
+    max-height: 280px; overflow: hidden;
+    transition: max-height .4s ease;
+    position: relative;
+  }
+  .svc-cases-list::after {
+    content: "";
+    position: absolute; bottom: 0; left: 0; right: 0; height: 80px;
+    background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+    pointer-events: none;
+    transition: opacity .3s ease;
+  }
+  .svc.is-open .svc-cases-list { max-height: 3000px; }
+  .svc.is-open .svc-cases-list::after { opacity: 0; }
+
+  /* CTA */
+  .cta {
+    padding: 100px 0;
+    background: var(--blue-900); color: #fff;
+    text-align: center;
+  }
+  .cta-inner {
+    max-width: 720px; margin: 0 auto; padding: 0 48px;
+  }
+  .cta h2 {
+    font-family: 'Roboto'; font-weight: 400;
+    font-size: 40px; line-height: 1.15;
+    margin: 0 0 16px; letter-spacing: -0.01em;
+  }
+  .cta h2 em { font-style: normal; color: var(--gold-200); font-weight: 400; }
+  .cta p {
+    font-size: 16px; opacity: 0.82; margin: 0 0 32px;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 14px; font-weight: 600; line-height: 1;
+    padding: 13px 22px; border-radius: 6px;
+    transition: background .15s, color .15s, border-color .15s;
+  }
+  .btn-primary {
+    background: var(--gold-400); color: var(--blue-900);
+    border: 1px solid var(--gold-400);
+  }
+  .btn-primary:hover { background: var(--gold-500); border-color: var(--gold-500); }
+  .btn .arrow { transition: transform .18s ease; }
+  .btn:hover .arrow { transform: translateX(3px); }
+
+  /* FOOTER */
+    .footer {
+    background: var(--blue-950);
+    background-image: linear-gradient(rgba(8,20,50,0.82), rgba(8,20,50,0.82)), url('images/skyline-downtown-new-york-new-york-usa.jpg');
+    background-size: cover; background-position: center;
+    color: #fff; padding: 80px 0 32px;
+    position: relative; overflow: hidden;
+  }
+  .footer::before {
+    content: ""; position: absolute; inset: 0;
+    background: repeating-linear-gradient(45deg, transparent 0 60px, rgba(255,255,255,0.02) 60px 61px);
+    pointer-events: none;
+  }
+  .footer-inner { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+  .footer-cols {
+    display: grid; grid-template-columns: 1fr 1fr 1fr 1.4fr;
+    gap: 48px; padding-bottom: 56px;
+  }
+  .footer-col h4 {
+    margin: 0 0 20px;
+    font-family: 'Roboto'; font-weight: 700; font-size: 11px;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--gold-200);
+  }
+  .footer-col a {
+    display: block; padding: 4px 0;
+    font-size: 14px; color: rgba(255,255,255,0.85);
+    transition: color .15s;
+  }
+  .footer-col a:hover { color: var(--gold-200); }
+  .footer-col-map { position: relative; min-height: 140px; }
+  .footer-col-map .map-wrap { position: absolute; inset: 0; overflow: hidden; }
+  .footer-col-map .map-wrap img {
+    width: 130%; height: auto;
+    position: absolute; top: 50%; left: -10%;
+    transform: translateY(-50%); opacity: 0.55;
+  }
+  .footer-col-map .map-wrap svg {
+    position: absolute; top: 50%; left: -10%;
+    transform: translateY(-50%);
+    width: 130%; height: auto; overflow: visible;
+  }
+  .footer-divider { height: 1px; background: rgba(255,255,255,0.15); margin: 0 0 24px; }
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center; gap: 24px;
+  }
+  .footer-nav { display: flex; gap: 28px; }
+  .footer-nav a {
+    font-size: 13px; color: rgba(255,255,255,0.7);
+    transition: color .15s; display: inline-flex; align-items: center; gap: 6px;
+  }
+  .footer-nav a:hover { color: #fff; }
+  .footer-copy { font-size: 13px; color: rgba(255,255,255,0.6); }
+  .footer-brand img { display: block; height: 28px; width: auto; opacity: 0.95; }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="Home.html" class="logo" aria-label="Equijust home">
+      <img src="images/logo-white.svg" alt="Equijust" width="114" height="32" />
+    </a>
+    <nav class="nav">
+      <a href="About.html">About us
+        <svg class="chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </a>
+      <div class="nav-dropdown active" id="svcDropdown">
+        <button class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+          Services
+          <svg class="chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <ul class="nav-dropdown-menu" role="menu"></ul>
+      </div>
+      <a href="Contact.html">Contact</a>
+      <div class="nav-lang" id="navLang">
+        <button class="nav-lang-toggle" aria-haspopup="listbox" aria-expanded="false">
+          <span class="nav-lang-current">En</span>
+          <svg class="chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <ul class="nav-lang-menu" role="listbox">
+          <li role="option" data-lang="en" class="active">English</li>
+          <li role="option" data-lang="es">Español</li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="page-hero-content">
+    <div class="breadcrumb">
+      <a href="Home.html">Home</a>
+      <span class="sep">/</span>
+      <span>Services</span>
+    </div>
+    <h1>Expertise across <em>six</em> core lines of cover.</h1>
+    <p class="kicker">Specialist loss adjusting for financial lines, cyber, commercial crime, casualty, specialty and specie risks — worldwide.</p>
+  </div>
+</section>
+
+<!-- INDEX RAIL -->
+<nav class="svc-index" id="svcIndex">
+  <div class="svc-index-inner"></div>
+</nav>
+
+<!-- INTRO -->
+<section class="svc-intro">
+  <div class="svc-intro-eyebrow">What we do</div>
+  <h2>Six lines of cover, handled by senior adjusters who have seen them before.</h2>
+  <p>Every service we offer is staffed by specialists with direct, hands-on experience of the policies, the wordings and the jurisdictions involved. The result: sharper technical answers, faster decisions and fewer surprises along the way.</p>
+</section>
+
+<!-- SERVICES -->
+<div id="svcSections"></div>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="cta-inner">
+    <h2>Not sure which cover applies to <em>your claim?</em></h2>
+    <p>Tell us what you're dealing with and we'll point you to the right specialist within the Equijust team.</p>
+    <a href="Contact.html" class="btn btn-primary">Talk to an adjuster
+      <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h4>About Us</h4>
+        <a href="About.html">Who We Are</a>
+        <a href="About.html#team">Our Team</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="Contact.html">Contact Us</a>
+        <a href="#">Offices</a>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <a href="Services.html#financial-lines">Financial Lines &amp; Professional Risks</a>
+        <a href="Services.html#cyber">Cyber Insurance</a>
+        <a href="Services.html#commercial-crime">Commercial Crime Risks</a>
+        <a href="Services.html#casualty">Commercial Liability &amp; Casualty</a>
+        <a href="Services.html#specialty">Specialty Insurance</a>
+        <a href="Services.html#specie">Specie &amp; High-Value Goods</a>
+        <a href="Services.html#financial-lines">Pre-Loss Consultancy &amp; Risk Assessment</a>
+      </div>
+      <div class="footer-col footer-col-map">
+        <div class="map-wrap">
+          <img src="images/world-map.svg" alt="" aria-hidden="true" />
+          <svg viewBox="0 0 382 152" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="191" cy="33" r="4" fill="#BFA373"/>
+            <circle cx="191" cy="33" r="2" fill="#fff"/>
+            <circle cx="106" cy="54" r="4" fill="#BFA373"/>
+            <circle cx="106" cy="54" r="2" fill="#fff"/>
+            <circle cx="112" cy="72" r="4" fill="#BFA373"/>
+            <circle cx="112" cy="72" r="2" fill="#fff"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-bottom">
+      <div class="footer-nav">
+        <a href="Privacy-Policy.html">Privacy Policy</a>
+        <a href="https://www.linkedin.com/company/equijust-inc./" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zM6.814 20.452H3.854V9h2.96v11.452z"/></svg>
+          LinkedIn
+        </a>
+      </div>
+      <div class="footer-copy">© 2026 Equijust. All rights reserved.</div>
+      <div class="footer-brand"><img src="images/logo-white.svg" alt="Equijust" width="114" height="32" /></div>
+    </div>
+  </div>
+</footer>
+
+<script src="services-data.js"></script>
+<script>
+  /* Topbar scroll state */
+  (function () {
+    const bar = document.querySelector('.topbar');
+    const onScroll = () => bar.classList.toggle('is-scrolled', window.scrollY > 40);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+
+  /* Language switcher */
+  (function () {
+    const wrap = document.getElementById('navLang');
+    if (!wrap) return;
+    const toggle = wrap.querySelector('.nav-lang-toggle');
+    const current = wrap.querySelector('.nav-lang-current');
+    const items = wrap.querySelectorAll('.nav-lang-menu li');
+    const labels = { en: 'En', es: 'Es' };
+    toggle.addEventListener('click', (e) => { e.stopPropagation(); const o = wrap.classList.toggle('open'); toggle.setAttribute('aria-expanded', o ? 'true' : 'false'); });
+    items.forEach(li => li.addEventListener('click', () => {
+      items.forEach(x => x.classList.remove('active'));
+      li.classList.add('active');
+      current.textContent = labels[li.dataset.lang] || 'En';
+      wrap.classList.remove('open');
+    }));
+    document.addEventListener('click', (e) => { if (!wrap.contains(e.target)) wrap.classList.remove('open'); });
+  })();
+
+  /* Services dropdown in nav */
+  (function () {
+    if (!window.SERVICES) return;
+    const wrap = document.getElementById('svcDropdown');
+    const menu = wrap.querySelector('.nav-dropdown-menu');
+    const toggle = wrap.querySelector('.nav-dropdown-toggle');
+    menu.innerHTML = window.SERVICES.map((s, i) => `
+      <li role="none">
+        <a role="menuitem" href="Services.html#${s.slug}">
+          <span>${String(i + 1).padStart(2, '0')} · ${s.name}</span>
+          <span class="hint">${s.hint}</span>
+        </a>
+      </li>
+    `).join('');
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const o = wrap.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', o ? 'true' : 'false');
+    });
+    document.addEventListener('click', (e) => {
+      if (!wrap.contains(e.target)) wrap.classList.remove('open');
+    });
+  })();
+
+  /* Render service sections */
+  (function () {
+    if (!window.SERVICES) return;
+    const host = document.getElementById('svcSections');
+    const escape = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+    const renderCoverage = cov => {
+      if (Array.isArray(cov)) {
+        return `<ul class="svc-coverage-list">${cov.map(x => `<li>${escape(x)}</li>`).join('')}</ul>`;
+      }
+      // grouped
+      return cov.map(g => `
+        <div class="svc-coverage-group">
+          <div class="svc-coverage-group-title">${escape(g.title)}</div>
+          <ul class="svc-coverage-list">${g.items.map(x => `<li>${escape(x)}</li>`).join('')}</ul>
+        </div>
+      `).join('');
+    };
+
+    host.innerHTML = window.SERVICES.map((s, i) => {
+      const idx = String(i + 1).padStart(2, '0');
+      const isReverse = i % 2 === 1;
+      const covBlock = Array.isArray(s.coverage) && s.coverage.length && typeof s.coverage[0] === 'string'
+        ? `<ul class="svc-coverage-list">${s.coverage.map(x => `<li>${escape(x)}</li>`).join('')}</ul>`
+        : (s.coverage || []).map(g => `
+            <div class="svc-coverage-group">
+              <div class="svc-coverage-group-title">${escape(g.title)}</div>
+              <ul class="svc-coverage-list">${g.items.map(x => `<li>${escape(x)}</li>`).join('')}</ul>
+            </div>`).join('');
+
+      return `
+        <section id="${s.slug}" class="svc-section" data-slug="${s.slug}">
+          <div class="svc${isReverse ? ' reverse' : ''}">
+            <div class="svc-grid">
+              <div class="svc-media" style="background-image: url('${escape(s.image)}');">
+                <div class="svc-num"><small>Service ${idx}</small>${idx}</div>
+              </div>
+              <div class="svc-content">
+                <div class="svc-eyebrow">${escape(s.eyebrow || 'Service')}</div>
+                <h2>${escape(s.name)}</h2>
+                <p class="desc">${escape(s.description)}</p>
+
+                <div class="svc-coverage">
+                  <h3>Coverage</h3>
+                  ${covBlock}
+                </div>
+
+                <div class="svc-cases">
+                  <div class="svc-cases-head">
+                    <h3>Sample cases</h3>
+                    <button class="svc-cases-toggle" aria-expanded="false">
+                      <span class="label">Show all ${s.cases.length}</span>
+                      <svg class="chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+                    </button>
+                  </div>
+                  <ul class="svc-cases-list">
+                    ${s.cases.map(c => `<li>${escape(c)}</li>`).join('')}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      `;
+    }).join('');
+
+    // Cases toggle
+    host.querySelectorAll('.svc-cases-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const svc = btn.closest('.svc');
+        const open = svc.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        btn.querySelector('.label').textContent = open ? 'Collapse' : ('Show all ' + svc.querySelectorAll('.svc-cases-list li').length);
+      });
+    });
+
+    // Build index rail
+    const idx = document.querySelector('.svc-index-inner');
+    idx.innerHTML = window.SERVICES.map((s, i) => `
+      <a href="#${s.slug}" data-slug="${s.slug}">
+        <span class="svc-index-number">${String(i + 1).padStart(2, '0')}</span>${s.name}
+      </a>
+    `).join('');
+
+    // Active section tracking
+    const indexLinks = idx.querySelectorAll('a');
+    const setActive = slug => {
+      indexLinks.forEach(a => a.classList.toggle('active', a.dataset.slug === slug));
+    };
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) setActive(e.target.dataset.slug);
+        });
+      }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+      document.querySelectorAll('.svc-section').forEach(s => io.observe(s));
+    }
+
+    // Open a section automatically if hash present
+    if (location.hash) {
+      const target = document.querySelector(location.hash);
+      if (target && target.classList.contains('svc-section')) {
+        target.querySelector('.svc').classList.add('is-open');
+        const btn = target.querySelector('.svc-cases-toggle');
+        if (btn) { btn.setAttribute('aria-expanded', 'true'); btn.querySelector('.label').textContent = 'Collapse'; }
+      }
+    }
+  })();
+</script>
+
+</body>
+</html>
