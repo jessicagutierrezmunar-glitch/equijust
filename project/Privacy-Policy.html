@@ -60,6 +60,20 @@
   }
   .nav > a:hover, .nav > a.active,
   .nav-dropdown-toggle:hover { color: var(--gold-200); }
+  .nav-dropdown-link {
+    font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.92);
+    display: inline-flex; align-items: center;
+    transition: color .15s;
+  }
+  .nav-dropdown-link:hover, .nav-dropdown-link.active { color: var(--gold-200); }
+  .nav-dropdown-chev {
+    background: transparent; border: none; padding: 2px; cursor: pointer;
+    display: inline-flex; align-items: center;
+    color: rgba(255,255,255,0.92); transition: color .15s;
+    font-family: inherit;
+  }
+  .nav-dropdown-chev:hover, .nav-dropdown.open .nav-dropdown-chev { color: var(--gold-200); }
+  .nav-dropdown.open .nav-dropdown-chev .chev { transform: rotate(180deg); }
   .nav-dropdown { position: relative; }
   .nav-dropdown.open .nav-dropdown-toggle .chev { transform: rotate(180deg); }
   .nav-dropdown .chev { transition: transform .2s ease; }
@@ -213,7 +227,7 @@
   }
   .footer-inner { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
   .footer-cols {
-    display: grid; grid-template-columns: 1fr 1fr 1fr 1.4fr;
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
     gap: 48px; padding-bottom: 56px;
   }
   .footer-col h4 {
@@ -265,8 +279,8 @@
     <nav class="nav">
       <a href="About.html">About us</a>
       <div class="nav-dropdown" id="svcDropdown">
-        <button class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
-          Services
+        <a href="Services.html" class="nav-dropdown-link">Services</a>
+        <button class="nav-dropdown-chev" aria-haspopup="true" aria-expanded="false">
           <svg class="chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <ul class="nav-dropdown-menu" role="menu">
@@ -447,19 +461,6 @@
         <a href="Services.html#specie">Specie &amp; High-Value Goods</a>
         <a href="Services.html#financial-lines">Pre-Loss Consultancy &amp; Risk Assessment</a>
       </div>
-      <div class="footer-col footer-col-map">
-        <div class="map-wrap">
-          <img src="images/world-map.svg" alt="" aria-hidden="true" />
-          <svg viewBox="0 0 382 152" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="191" cy="33" r="4" fill="#BFA373"/>
-            <circle cx="191" cy="33" r="2" fill="#fff"/>
-            <circle cx="106" cy="54" r="4" fill="#BFA373"/>
-            <circle cx="106" cy="54" r="2" fill="#fff"/>
-            <circle cx="112" cy="72" r="4" fill="#BFA373"/>
-            <circle cx="112" cy="72" r="2" fill="#fff"/>
-          </svg>
-        </div>
-      </div>
     </div>
     <div class="footer-divider"></div>
     <div class="footer-bottom">
@@ -504,7 +505,7 @@
   (function () {
     const wrap = document.getElementById('svcDropdown');
     if (!wrap) return;
-    const toggle = wrap.querySelector('.nav-dropdown-toggle');
+    const toggle = wrap.querySelector('.nav-dropdown-chev');
     toggle.addEventListener('click', (e) => {
       e.stopPropagation();
       const o = wrap.classList.toggle('open');

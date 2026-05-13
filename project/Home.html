@@ -106,12 +106,6 @@
 
   /* ==================== SERVICES DROPDOWN ==================== */
   .nav-dropdown { position: relative; display: inline-flex; align-items: center; gap: 2px; }
-  .nav-dropdown-label {
-    font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.92);
-    transition: color .15s ease;
-  }
-  .nav-dropdown-label:hover,
-  .nav-dropdown.open .nav-dropdown-label { color: var(--gold-200); }
   .nav-dropdown-toggle {
     background: transparent; border: none; padding: 2px; font-family: inherit; cursor: pointer;
     display: inline-flex; align-items: center;
@@ -121,6 +115,20 @@
   .nav-dropdown-toggle:hover,
   .nav-dropdown.open .nav-dropdown-toggle { color: var(--gold-200); }
   .nav-dropdown.open .nav-dropdown-toggle .chev { transform: rotate(180deg); }
+  .nav-dropdown-link {
+    font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.92);
+    display: inline-flex; align-items: center;
+    transition: color .15s;
+  }
+  .nav-dropdown-link:hover, .nav-dropdown-link.active { color: var(--gold-200); }
+  .nav-dropdown-chev {
+    background: transparent; border: none; padding: 2px; cursor: pointer;
+    display: inline-flex; align-items: center;
+    color: rgba(255,255,255,0.92); transition: color .15s;
+    font-family: inherit;
+  }
+  .nav-dropdown-chev:hover, .nav-dropdown.open .nav-dropdown-chev { color: var(--gold-200); }
+  .nav-dropdown.open .nav-dropdown-chev .chev { transform: rotate(180deg); }
   .nav-dropdown-menu {
     position: absolute; top: calc(100% + 18px); left: 50%;
     transform: translate(-50%, -4px);
@@ -473,7 +481,7 @@
   }
   .footer-inner { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
   .footer-cols {
-    display: grid; grid-template-columns: 1fr 1fr 1fr 1.4fr;
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
     gap: 48px;
     padding-bottom: 56px;
   }
@@ -844,23 +852,23 @@
       <img src="images/logo-white.svg" alt="Equijust" width="114" height="32" />
     </a>
     <nav class="nav">
-      <a href="About.html">About us</a>
+      <a href="About.html" data-i18n="nav_about">About us</a>
       <div class="nav-dropdown" id="svcDropdown">
-        <a href="Services.html" class="nav-dropdown-label">Services</a>
-        <button class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+        <a href="Services.html" class="nav-dropdown-link" data-i18n="nav_services">Services</a>
+        <button class="nav-dropdown-chev" aria-haspopup="true" aria-expanded="false">
           <svg class="chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <ul class="nav-dropdown-menu" role="menu"></ul>
       </div>
-      <a href="Contact.html">Contact</a>
+      <a href="Contact.html" data-i18n="nav_contact">Contact</a>
       <div class="nav-lang" id="navLang">
         <a href="#navLang" class="nav-lang-toggle" aria-haspopup="listbox" aria-expanded="false">
           <span class="nav-lang-current">En</span>
           <svg class="chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
         </a>
         <ul class="nav-lang-menu" role="listbox">
-          <li role="option" data-lang="en" class="active">English</li>
-          <li role="option" data-lang="es">Español</li>
+          <li role="option" data-lang="en" class="active" data-i18n="lang_en">English</li>
+          <li role="option" data-lang="es" data-i18n="lang_es">Español</li>
         </ul>
       </div>
     </nav>
@@ -870,14 +878,15 @@
 <!-- ==================== HERO ==================== -->
 <section class="hero">
   <div class="hero-content">
-    <span class="hero-eyebrow">Claims management · Global</span>
-    <h1>Your strategic partner in claims management: <em>precision, trust, and expertise.</em></h1>
-    <p class="lead">Three decades of experience resolving complex losses across Latin America and Europe. Accuracy and tangible results for insurers, reinsurers and their clients.</p>
+    <span class="hero-eyebrow" data-i18n="home_hero_eyebrow">Claims management · Global</span>
+    <h1 data-i18n-html="home_hero_h1">Your strategic partner in claims management: <em>precision, trust and expertise.</em></h1>
+    <p class="lead" data-i18n="home_hero_lead">Three decades of experience resolving complex losses across Latin America and Europe. Accuracy and tangible results for insurers, reinsurers and their clients.</p>
     <div style="display:flex; gap:12px;">
-      <a href="#contact" class="btn btn-primary">Learn more
+      <a href="#contact" class="btn btn-primary">
+        <span data-i18n="home_hero_btn_primary">Learn more</span>
         <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </a>
-      <a href="Services.html" class="btn btn-ghost-dark">Our services</a>
+      <a href="Services.html" class="btn btn-ghost-dark" data-i18n="home_hero_btn_ghost">Our services</a>
     </div>
   </div>
 </section>
@@ -889,12 +898,12 @@
     <div class="service-media" style="background-image: url('images/financial-lines-hero.jpg');"></div>
     <div class="service-content">
       <div>
-        <div class="service-eyebrow">Services</div>
-        <h2>Financial Lines<br/>and Professional<br/>Risks</h2>
+        <div class="service-eyebrow" data-i18n="home_svc_eyebrow">Services</div>
+        <h2 data-i18n="home_svc1_h2">Financial Lines<br/>and Professional<br/>Risks</h2>
       </div>
       <div class="service-body">
-        <p>We handle claims related to financial crimes and professional liability, including coverage for banks, insurers, and professionals. Our expertise includes BBB policies, cybercrime, errors and omissions, and liability for directors and public officials.</p>
-        <a href="Services.html#financial-lines" class="link-ghost">See more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <p data-i18n="home_svc1_body">We handle claims related to financial crimes and professional liability, including coverage for banks, insurers and professionals. Our expertise includes BBB policies, cybercrime, errors and omissions and liability for directors and public officials.</p>
+        <a href="Services.html#financial-lines" class="link-ghost"><span data-i18n="home_svc1_link">See more</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
       </div>
     </div>
   </article>
@@ -904,12 +913,12 @@
     <div class="service-media" style="background-image: url('images/senior-man-diagram.jpg');"></div>
     <div class="service-content">
       <div>
-        <div class="service-eyebrow">Services</div>
-        <h2>Commercial Crime Risks</h2>
+        <div class="service-eyebrow" data-i18n="home_svc_eyebrow">Services</div>
+        <h2 data-i18n="home_svc2_h2">Commercial Crime Risks</h2>
       </div>
       <div class="service-body">
-        <p>Specialists in handling commercial crime, employee dishonesty, supplier fraud, inventory theft, and computer-related crimes. A tailored approach for institutions facing internal or external financial risks.</p>
-        <a href="Services.html#commercial-crime" class="link-ghost">See more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <p data-i18n="home_svc2_body">Specialists in handling commercial crime, employee dishonesty, supplier fraud, inventory theft and computer-related crimes. A tailored approach for institutions facing internal or external financial risks.</p>
+        <a href="Services.html#commercial-crime" class="link-ghost"><span data-i18n="home_svc2_link">See more</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
       </div>
     </div>
   </article>
@@ -923,7 +932,7 @@
         <h2>Commercial Liability and Casualty Risks</h2>
       </div>
       <div class="service-body">
-        <p>Specialists in civil liability, product recall and claims involving malicious tampering. We provide technical and strategic guidance in events that impact operations, reputation, financial stability, and regulatory compliance nationally and internationally.</p>
+        <p>Specialists in civil liability, product recall and claims involving malicious tampering. We provide technical and strategic guidance in events that impact operations, reputation, financial stability and regulatory compliance nationally and internationally.</p>
         <a href="Services.html#casualty" class="link-ghost">See more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
       </div>
     </div>
@@ -938,7 +947,7 @@
         <h2>Financial Institutions Pre-Loss Consultancy &amp; Risk Assessment</h2>
       </div>
       <div class="service-body">
-        <p>Tailored risk reviews for (re)insurers and their insureds, with expert focus on fraud, crime, and professional negligence. We support clients through assessment, evaluation, and actionable recommendations.</p>
+        <p>Tailored risk reviews for (re)insurers and their insureds, with expert focus on fraud, crime and professional negligence. We support clients through assessment, evaluation and actionable recommendations.</p>
         <a href="Services.html#financial-lines" class="link-ghost">See more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
       </div>
     </div>
@@ -953,7 +962,7 @@
         <h2>Specie and High-Value Goods</h2>
       </div>
       <div class="service-body">
-        <p>We handle claims involving theft or loss of cash in transit, bullion, jewellery, art, and other high-value items. Our expertise includes group inspections and specialised analysis in high-exposure coverages with significant logistical and reputational sensitivity.</p>
+        <p>We handle claims involving theft or loss of cash in transit, bullion, jewellery, art and other high-value items. Our expertise includes group inspections and specialised analysis in high-exposure coverages with significant logistical and reputational sensitivity.</p>
         <a href="Services.html#specie" class="link-ghost">See more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
       </div>
     </div>
@@ -968,7 +977,7 @@
         <h2>Cyber Insurance</h2>
       </div>
       <div class="service-body">
-        <p>We provide specialised support for claims arising from cyberattacks such as ransomware, digital fraud, data breaches, and operational disruptions. We assess coverage, quantify losses, and manage liabilities associated with complex digital events.</p>
+        <p>We provide specialised support for claims arising from cyberattacks such as ransomware, digital fraud, data breaches and operational disruptions. We assess coverage, quantify losses and manage liabilities associated with complex digital events.</p>
         <a href="Services.html#cyber" class="link-ghost">See more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
       </div>
     </div>
@@ -983,7 +992,7 @@
         <h2>Specialty Insurance</h2>
       </div>
       <div class="service-body">
-        <p>We support the management of complex claims in export credit insurance, frustrated contracts, and losses due to confiscation, expropriation, or nationalisation. Our international experience is key in handling these sophisticated and sensitive coverages.</p>
+        <p>We support the management of complex claims in export credit insurance, frustrated contracts and losses due to confiscation, expropriation or nationalisation. Our international experience is key in handling these sophisticated and sensitive coverages.</p>
         <a href="Services.html#specialty" class="link-ghost">See more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
       </div>
     </div>
@@ -1105,28 +1114,40 @@
         <img src="images/partner-ala.png" alt="Arab Loss Adjusters" />
         <div class="gp-country">Arabian Gulf</div>
       </div>
-      <div class="gp-card gp-card--logo" role="group" aria-label="Viollier &amp; Asociados">
-        <img src="images/partner-viollier.png" alt="Viollier &amp; Asociados" />
+      <div class="gp-card gp-card--logo" role="group" aria-label="Ascoli &amp; Weil">
+        <img src="images/partner-ascoli.png" alt="Ascoli &amp; Weil" />
         <div class="gp-country">Chile</div>
       </div>
       <div class="gp-card gp-card--logo" role="group" aria-label="SustenSeg">
         <img src="images/partner-sustenseg.png" alt="SustenSeg" />
         <div class="gp-country">Brazil</div>
       </div>
-      <div class="gp-card gp-card--logo" role="group" aria-label="Ascoli &amp; Weil">
-        <img src="images/partner-ascoli.png" alt="Ascoli &amp; Weil" />
+      <div class="gp-card gp-card--logo" role="group" aria-label="Viollier &amp; Asociados">
+        <img src="images/partner-viollier.png" alt="Viollier &amp; Asociados" />
         <div class="gp-country">Argentina</div>
       </div>
 
-      <div class="gp-card gp-card--text"><div class="gp-name">Integra Loss Adjusters</div><div class="gp-country">Belgium</div></div>
-      <div class="gp-card gp-card--text"><div class="gp-name">Otecsa S.A.</div><div class="gp-country">Central America</div></div>
-      <div class="gp-card gp-card--text"><div class="gp-name">Incok Loss &amp; Average Adjusters</div><div class="gp-country">Korea</div></div>
+      <div class="gp-card gp-card--logo" role="group" aria-label="Integra Loss Adjusters">
+        <img src="images/partner-integra.png" alt="Integra Loss Adjusters" />
+        <div class="gp-country">Belgium</div>
+      </div>
+      <div class="gp-card gp-card--logo" role="group" aria-label="Otecsa S.A.">
+        <img src="images/partner-otecsa.png" alt="Otecsa S.A." />
+        <div class="gp-country">Central America</div>
+      </div>
+      <div class="gp-card gp-card--logo" role="group" aria-label="Incok Loss &amp; Average Adjusters">
+        <img src="images/partner-incok.png" alt="Incok Loss &amp; Average Adjusters" />
+        <div class="gp-country">Korea</div>
+      </div>
       <div class="gp-card gp-card--text"><div class="gp-name">Serclaims</div><div class="gp-country">Ecuador</div></div>
       <div class="gp-card gp-card--text"><div class="gp-name">Oriental Loss Adjusters</div><div class="gp-country">Hong Kong</div></div>
       <div class="gp-card gp-card--text"><div class="gp-name">Intercheck Limited</div><div class="gp-country">Kenya</div></div>
       <div class="gp-card gp-card--text"><div class="gp-name">Samir Awwad Consultants</div><div class="gp-country">Middle East</div></div>
       <div class="gp-card gp-card--text"><div class="gp-name">JT Integrity Claims</div><div class="gp-country">Mexico</div></div>
-      <div class="gp-card gp-card--text"><div class="gp-name">A.I.R. Ajustadores</div><div class="gp-country">Panamá</div></div>
+      <div class="gp-card gp-card--logo" role="group" aria-label="A.I.R. Ajustadores">
+        <img src="images/partner-air.png" alt="A.I.R. Ajustadores" />
+        <div class="gp-country">Panamá</div>
+      </div>
       <div class="gp-card gp-card--text"><div class="gp-name">Protegia Ajustadores</div><div class="gp-country">Peru</div></div>
       <div class="gp-card gp-card--text"><div class="gp-name">Bureau Assessor</div><div class="gp-country">Russia</div></div>
       <div class="gp-card gp-card--text"><div class="gp-name">Hwa Hsin Adjusters</div><div class="gp-country">Taiwan</div></div>
@@ -1184,13 +1205,9 @@
 <section class="video-section">
   <div class="video-inner">
     <div class="video-frame">
-      <iframe
-        src="https://www.youtube-nocookie.com/embed/H0c5rD2dmvg?rel=0&modestbranding=1"
-        title="Equijust"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen
-        loading="lazy"
-        referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      <video controls preload="metadata" style="width:100%;height:100%;display:block;">
+        <source src="images/equijust-video.mp4" type="video/mp4">
+      </video>
     </div>
   </div>
 </section>
@@ -1241,43 +1258,30 @@
   <div class="footer-inner">
     <div class="footer-cols">
       <div class="footer-col">
-        <h4>About Us</h4>
-        <a href="About.html">Who We Are</a>
-        <a href="About.html#team">Our Team</a>
+        <h4 data-i18n="footer_col_about">About Us</h4>
+        <a href="About.html" data-i18n="footer_link_who_we_are">Who We Are</a>
+        <a href="About.html#team" data-i18n="footer_link_our_team">Our Team</a>
       </div>
       <div class="footer-col">
-        <h4>Contact</h4>
-        <a href="#contact">Contact Us</a>
-        <a href="#">Offices</a>
+        <h4 data-i18n="footer_col_contact">Contact</h4>
+        <a href="#contact" data-i18n="footer_link_contact_us">Contact Us</a>
+        <a href="#" data-i18n="footer_link_offices">Offices</a>
       </div>
       <div class="footer-col">
-        <h4>Services</h4>
-        <a href="Services.html#financial-lines">Financial Lines &amp; Professional Risks</a>
-        <a href="Services.html#cyber">Cyber Insurance</a>
-        <a href="Services.html#commercial-crime">Commercial Crime Risks</a>
-        <a href="Services.html#casualty">Commercial Liability &amp; Casualty</a>
-        <a href="Services.html#specialty">Specialty Insurance</a>
-        <a href="Services.html#specie">Specie &amp; High-Value Goods</a>
-        <a href="Services.html#financial-lines">Pre-Loss Consultancy &amp; Risk Assessment</a>
-      </div>
-      <div class="footer-col footer-col-map">
-        <div class="map-wrap">
-          <img src="images/world-map.svg" alt="" aria-hidden="true" />
-          <svg viewBox="0 0 382 152" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="191" cy="33" r="4" fill="#BFA373"/>
-            <circle cx="191" cy="33" r="2" fill="#fff"/>
-            <circle cx="106" cy="54" r="4" fill="#BFA373"/>
-            <circle cx="106" cy="54" r="2" fill="#fff"/>
-            <circle cx="112" cy="72" r="4" fill="#BFA373"/>
-            <circle cx="112" cy="72" r="2" fill="#fff"/>
-          </svg>
-        </div>
+        <h4 data-i18n="footer_col_services">Services</h4>
+        <a href="Services.html#financial-lines" data-i18n="footer_link_fin_lines">Financial Lines &amp; Professional Risks</a>
+        <a href="Services.html#cyber" data-i18n="footer_link_cyber">Cyber Insurance</a>
+        <a href="Services.html#commercial-crime" data-i18n="footer_link_crime">Commercial Crime Risks</a>
+        <a href="Services.html#casualty" data-i18n="footer_link_casualty">Commercial Liability &amp; Casualty</a>
+        <a href="Services.html#specialty" data-i18n="footer_link_specialty">Specialty Insurance</a>
+        <a href="Services.html#specie" data-i18n="footer_link_specie">Specie &amp; High-Value Goods</a>
+        <a href="Services.html#financial-lines" data-i18n="footer_link_preloss">Pre-Loss Consultancy &amp; Risk Assessment</a>
       </div>
     </div>
     <div class="footer-divider"></div>
     <div class="footer-bottom">
       <div class="footer-nav">
-        <a href="Privacy-Policy.html">Privacy Policy</a>
+        <a href="Privacy-Policy.html" data-i18n="footer_link_privacy">Privacy Policy</a>
         <a href="https://www.linkedin.com/company/equijust-inc./" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zM6.814 20.452H3.854V9h2.96v11.452z"/></svg>
           LinkedIn
@@ -1517,6 +1521,7 @@
         current.textContent = labels[li.dataset.lang] || 'En';
         wrap.classList.remove('open');
         toggle.setAttribute('aria-expanded', 'false');
+        window.setLanguage && window.setLanguage(li.dataset.lang);
       });
     });
     document.addEventListener('click', (e) => {
@@ -1544,7 +1549,7 @@
     const wrap = document.getElementById('svcDropdown');
     if (!wrap) return;
     const menu = wrap.querySelector('.nav-dropdown-menu');
-    const toggle = wrap.querySelector('.nav-dropdown-toggle');
+    const toggle = wrap.querySelector('.nav-dropdown-chev');
     menu.innerHTML = window.SERVICES.map((s, i) => `
       <li role="none">
         <a role="menuitem" href="Services.html#${s.slug}">
@@ -1564,5 +1569,7 @@
   })();
 </script>
 
+<script src="translations.js"></script>
+<script src="i18n.js"></script>
 </body>
 </html>

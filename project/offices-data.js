@@ -36,7 +36,7 @@ window.OFFICES = [
     city: 'Bogotá',
     flag: 'Colombia',
     entity: 'Equijust — Bogotá office',
-    address: 'Calle 90 No. 19A-49, Oficina 303\nBogotá, Colombia',
+    address: '',
     tel: '+57 (1) 300 3881 / 3612 / 3633',
     email: 'bogota@equijust.com',
     coords: [4.6760, -74.0500],

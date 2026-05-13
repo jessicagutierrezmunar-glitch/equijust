@@ -60,6 +60,20 @@
   }
   .nav > a:hover, .nav > a.active,
   .nav-dropdown-toggle:hover, .nav-dropdown.active > .nav-dropdown-toggle { color: var(--gold-200); }
+  .nav-dropdown-link {
+    font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.92);
+    display: inline-flex; align-items: center;
+    transition: color .15s;
+  }
+  .nav-dropdown-link:hover, .nav-dropdown-link.active { color: var(--gold-200); }
+  .nav-dropdown-chev {
+    background: transparent; border: none; padding: 2px; cursor: pointer;
+    display: inline-flex; align-items: center;
+    color: rgba(255,255,255,0.92); transition: color .15s;
+    font-family: inherit;
+  }
+  .nav-dropdown-chev:hover, .nav-dropdown.open .nav-dropdown-chev { color: var(--gold-200); }
+  .nav-dropdown.open .nav-dropdown-chev .chev { transform: rotate(180deg); }
 
   /* Services dropdown */
   .nav-dropdown { position: relative; }
@@ -136,7 +150,7 @@
     position: absolute; inset: 0; z-index: -2;
     background-image:
       linear-gradient(180deg, rgba(13,29,53,0.55) 0%, rgba(13,29,53,0.75) 100%),
-      url('images/briefcases.jpg');
+      url('images/services-hero.jpg');
     background-size: cover; background-position: center;
   }
   .page-hero-content {
@@ -390,7 +404,7 @@
   }
   .footer-inner { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
   .footer-cols {
-    display: grid; grid-template-columns: 1fr 1fr 1fr 1.4fr;
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
     gap: 48px; padding-bottom: 56px;
   }
   .footer-col h4 {
@@ -440,25 +454,25 @@
       <img src="images/logo-white.svg" alt="Equijust" width="114" height="32" />
     </a>
     <nav class="nav">
-      <a href="About.html">About us
+      <a href="About.html"><span data-i18n="nav_about">About us</span>
         <svg class="chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
       </a>
       <div class="nav-dropdown active" id="svcDropdown">
-        <button class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
-          Services
+        <a href="Services.html" class="nav-dropdown-link" data-i18n="nav_services">Services</a>
+        <button class="nav-dropdown-chev" aria-haspopup="true" aria-expanded="false">
           <svg class="chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <ul class="nav-dropdown-menu" role="menu"></ul>
       </div>
-      <a href="Contact.html">Contact</a>
+      <a href="Contact.html" data-i18n="nav_contact">Contact</a>
       <div class="nav-lang" id="navLang">
         <button class="nav-lang-toggle" aria-haspopup="listbox" aria-expanded="false">
           <span class="nav-lang-current">En</span>
           <svg class="chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <ul class="nav-lang-menu" role="listbox">
-          <li role="option" data-lang="en" class="active">English</li>
-          <li role="option" data-lang="es">Español</li>
+          <li role="option" data-lang="en" class="active" data-i18n="lang_en">English</li>
+          <li role="option" data-lang="es" data-i18n="lang_es">Español</li>
         </ul>
       </div>
     </nav>
@@ -469,12 +483,12 @@
 <section class="page-hero">
   <div class="page-hero-content">
     <div class="breadcrumb">
-      <a href="Home.html">Home</a>
+      <a href="Home.html" data-i18n="svc_breadcrumb_home">Home</a>
       <span class="sep">/</span>
-      <span>Services</span>
+      <span data-i18n="svc_breadcrumb_current">Services</span>
     </div>
-    <h1>Expertise across <em>six</em> core lines of cover.</h1>
-    <p class="kicker">Specialist loss adjusting for financial lines, cyber, commercial crime, casualty, specialty and specie risks — worldwide.</p>
+    <h1 data-i18n-html="svc_hero_h1">Expertise across <em>six</em> core lines of cover.</h1>
+    <p class="kicker" data-i18n="svc_hero_kicker">Specialist loss adjusting for financial lines, cyber, commercial crime, casualty, specialty and specie risks — worldwide.</p>
   </div>
 </section>
 
@@ -485,9 +499,9 @@
 
 <!-- INTRO -->
 <section class="svc-intro">
-  <div class="svc-intro-eyebrow">What we do</div>
-  <h2>Six lines of cover, handled by senior adjusters who have seen them before.</h2>
-  <p>Every service we offer is staffed by specialists with direct, hands-on experience of the policies, the wordings and the jurisdictions involved. The result: sharper technical answers, faster decisions and fewer surprises along the way.</p>
+  <div class="svc-intro-eyebrow" data-i18n="svc_intro_eyebrow">What we do</div>
+  <h2 data-i18n="svc_intro_h2">Six lines of cover, handled by senior adjusters who have seen them before.</h2>
+  <p data-i18n="svc_intro_p">Every service we offer is staffed by specialists with direct, hands-on experience of the policies, the wordings and the jurisdictions involved. The result: sharper technical answers, faster decisions and fewer surprises along the way.</p>
 </section>
 
 <!-- SERVICES -->
@@ -496,9 +510,9 @@
 <!-- CTA -->
 <section class="cta">
   <div class="cta-inner">
-    <h2>Not sure which cover applies to <em>your claim?</em></h2>
-    <p>Tell us what you're dealing with and we'll point you to the right specialist within the Equijust team.</p>
-    <a href="Contact.html" class="btn btn-primary">Talk to an adjuster
+    <h2 data-i18n-html="svc_cta_h2">Not sure which cover applies to <em>your claim?</em></h2>
+    <p data-i18n="svc_cta_p">Tell us what you are dealing with and we will point you to the right specialist within the Equijust team.</p>
+    <a href="Contact.html" class="btn btn-primary"><span data-i18n="svc_cta_btn">Talk to an adjuster</span>
       <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
     </a>
   </div>
@@ -509,43 +523,30 @@
   <div class="footer-inner">
     <div class="footer-cols">
       <div class="footer-col">
-        <h4>About Us</h4>
-        <a href="About.html">Who We Are</a>
-        <a href="About.html#team">Our Team</a>
+        <h4 data-i18n="footer_col_about">About Us</h4>
+        <a href="About.html" data-i18n="footer_link_who_we_are">Who We Are</a>
+        <a href="About.html#team" data-i18n="footer_link_our_team">Our Team</a>
       </div>
       <div class="footer-col">
-        <h4>Contact</h4>
-        <a href="Contact.html">Contact Us</a>
-        <a href="#">Offices</a>
+        <h4 data-i18n="footer_col_contact">Contact</h4>
+        <a href="Contact.html" data-i18n="footer_link_contact_us">Contact Us</a>
+        <a href="#" data-i18n="footer_link_offices">Offices</a>
       </div>
       <div class="footer-col">
-        <h4>Services</h4>
-        <a href="Services.html#financial-lines">Financial Lines &amp; Professional Risks</a>
-        <a href="Services.html#cyber">Cyber Insurance</a>
-        <a href="Services.html#commercial-crime">Commercial Crime Risks</a>
-        <a href="Services.html#casualty">Commercial Liability &amp; Casualty</a>
-        <a href="Services.html#specialty">Specialty Insurance</a>
-        <a href="Services.html#specie">Specie &amp; High-Value Goods</a>
-        <a href="Services.html#financial-lines">Pre-Loss Consultancy &amp; Risk Assessment</a>
-      </div>
-      <div class="footer-col footer-col-map">
-        <div class="map-wrap">
-          <img src="images/world-map.svg" alt="" aria-hidden="true" />
-          <svg viewBox="0 0 382 152" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="191" cy="33" r="4" fill="#BFA373"/>
-            <circle cx="191" cy="33" r="2" fill="#fff"/>
-            <circle cx="106" cy="54" r="4" fill="#BFA373"/>
-            <circle cx="106" cy="54" r="2" fill="#fff"/>
-            <circle cx="112" cy="72" r="4" fill="#BFA373"/>
-            <circle cx="112" cy="72" r="2" fill="#fff"/>
-          </svg>
-        </div>
+        <h4 data-i18n="footer_col_services">Services</h4>
+        <a href="Services.html#financial-lines" data-i18n="footer_link_fin_lines">Financial Lines &amp; Professional Risks</a>
+        <a href="Services.html#cyber" data-i18n="footer_link_cyber">Cyber Insurance</a>
+        <a href="Services.html#commercial-crime" data-i18n="footer_link_crime">Commercial Crime Risks</a>
+        <a href="Services.html#casualty" data-i18n="footer_link_casualty">Commercial Liability &amp; Casualty</a>
+        <a href="Services.html#specialty" data-i18n="footer_link_specialty">Specialty Insurance</a>
+        <a href="Services.html#specie" data-i18n="footer_link_specie">Specie &amp; High-Value Goods</a>
+        <a href="Services.html#financial-lines" data-i18n="footer_link_preloss">Pre-Loss Consultancy &amp; Risk Assessment</a>
       </div>
     </div>
     <div class="footer-divider"></div>
     <div class="footer-bottom">
       <div class="footer-nav">
-        <a href="Privacy-Policy.html">Privacy Policy</a>
+        <a href="Privacy-Policy.html" data-i18n="footer_link_privacy">Privacy Policy</a>
         <a href="https://www.linkedin.com/company/equijust-inc./" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zM6.814 20.452H3.854V9h2.96v11.452z"/></svg>
           LinkedIn
@@ -581,6 +582,7 @@
       li.classList.add('active');
       current.textContent = labels[li.dataset.lang] || 'En';
       wrap.classList.remove('open');
+      window.setLanguage && window.setLanguage(li.dataset.lang);
     }));
     document.addEventListener('click', (e) => { if (!wrap.contains(e.target)) wrap.classList.remove('open'); });
   })();
@@ -590,7 +592,7 @@
     if (!window.SERVICES) return;
     const wrap = document.getElementById('svcDropdown');
     const menu = wrap.querySelector('.nav-dropdown-menu');
-    const toggle = wrap.querySelector('.nav-dropdown-toggle');
+    const toggle = wrap.querySelector('.nav-dropdown-chev');
     menu.innerHTML = window.SERVICES.map((s, i) => `
       <li role="none">
         <a role="menuitem" href="Services.html#${s.slug}">
@@ -644,7 +646,7 @@
           <div class="svc${isReverse ? ' reverse' : ''}">
             <div class="svc-grid">
               <div class="svc-media" style="background-image: url('${escape(s.image)}');">
-                <div class="svc-num"><small>Service ${idx}</small>${idx}</div>
+                <div class="svc-num"><small><span data-i18n="svc_label_service">Service</span></small>${idx}</div>
               </div>
               <div class="svc-content">
                 <div class="svc-eyebrow">${escape(s.eyebrow || 'Service')}</div>
@@ -652,13 +654,13 @@
                 <p class="desc">${escape(s.description)}</p>
 
                 <div class="svc-coverage">
-                  <h3>Coverage</h3>
+                  <h3 data-i18n="svc_label_coverage">Coverage</h3>
                   ${covBlock}
                 </div>
 
                 <div class="svc-cases">
                   <div class="svc-cases-head">
-                    <h3>Sample cases</h3>
+                    <h3 data-i18n="svc_label_cases">Sample cases</h3>
                     <button class="svc-cases-toggle" aria-expanded="false">
                       <span class="label">Show all ${s.cases.length}</span>
                       <svg class="chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
@@ -681,7 +683,10 @@
         const svc = btn.closest('.svc');
         const open = svc.classList.toggle('is-open');
         btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-        btn.querySelector('.label').textContent = open ? 'Collapse' : ('Show all ' + svc.querySelectorAll('.svc-cases-list li').length);
+        const t = (window.TRANSLATIONS || {})[localStorage.getItem('eq_lang') || 'en'] || {};
+        btn.querySelector('.label').textContent = open
+          ? (t.svc_label_collapse || 'Collapse')
+          : (t.svc_label_show_all || 'Show all') + ' ' + svc.querySelectorAll('.svc-cases-list li').length;
       });
     });
 
@@ -689,7 +694,7 @@
     const idx = document.querySelector('.svc-index-inner');
     idx.innerHTML = window.SERVICES.map((s, i) => `
       <a href="#${s.slug}" data-slug="${s.slug}">
-        <span class="svc-index-number">${String(i + 1).padStart(2, '0')}</span>${s.name}
+        <span class="svc-index-number">${String(i + 1).padStart(2, '0')}</span>${s.nav || s.name}
       </a>
     `).join('');
 
@@ -713,11 +718,17 @@
       if (target && target.classList.contains('svc-section')) {
         target.querySelector('.svc').classList.add('is-open');
         const btn = target.querySelector('.svc-cases-toggle');
-        if (btn) { btn.setAttribute('aria-expanded', 'true'); btn.querySelector('.label').textContent = 'Collapse'; }
+        if (btn) {
+          btn.setAttribute('aria-expanded', 'true');
+          const t = (window.TRANSLATIONS || {})[localStorage.getItem('eq_lang') || 'en'] || {};
+          btn.querySelector('.label').textContent = t.svc_label_collapse || 'Collapse';
+        }
       }
     }
   })();
 </script>
 
+<script src="translations.js"></script>
+<script src="i18n.js"></script>
 </body>
 </html>

@@ -59,12 +59,6 @@
 
   /* Services dropdown */
   .nav-dropdown { position: relative; display: inline-flex; align-items: center; gap: 2px; }
-  .nav-dropdown-label {
-    font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.92);
-    transition: color .15s ease;
-  }
-  .nav-dropdown-label:hover,
-  .nav-dropdown.open .nav-dropdown-label { color: var(--gold-200); }
   .nav-dropdown-toggle {
     background: transparent; border: none; padding: 0; font-family: inherit; cursor: pointer;
     display: inline-flex; align-items: center; gap: 4px;
@@ -74,6 +68,20 @@
   .nav-dropdown-toggle:hover, .nav-dropdown.open .nav-dropdown-toggle { color: var(--gold-200); }
   .nav-dropdown.open .nav-dropdown-toggle .chev { transform: rotate(180deg); }
   .nav-dropdown .chev { transition: transform .2s ease; }
+  .nav-dropdown-link {
+    font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.92);
+    display: inline-flex; align-items: center;
+    transition: color .15s;
+  }
+  .nav-dropdown-link:hover, .nav-dropdown-link.active { color: var(--gold-200); }
+  .nav-dropdown-chev {
+    background: transparent; border: none; padding: 2px; cursor: pointer;
+    display: inline-flex; align-items: center;
+    color: rgba(255,255,255,0.92); transition: color .15s;
+    font-family: inherit;
+  }
+  .nav-dropdown-chev:hover, .nav-dropdown.open .nav-dropdown-chev { color: var(--gold-200); }
+  .nav-dropdown.open .nav-dropdown-chev .chev { transform: rotate(180deg); }
   .nav-dropdown-menu {
     position: absolute; top: calc(100% + 18px); left: 50%;
     transform: translate(-50%, -4px);
@@ -144,7 +152,7 @@
     position: absolute; inset: 0; z-index: -2;
     background-image:
       linear-gradient(180deg, rgba(13,29,53,0.55) 0%, rgba(13,29,53,0.75) 100%),
-      url('images/cityscape-aerial.jpg');
+      url('images/about-hero.jpg');
     background-size: cover; background-position: center;
   }
   .page-hero-content {
@@ -507,7 +515,7 @@
   }
   .footer-inner { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
   .footer-cols {
-    display: grid; grid-template-columns: 1fr 1fr 1fr 1.4fr;
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
     gap: 48px; padding-bottom: 56px;
   }
   .footer-col h4 {
@@ -557,25 +565,25 @@
       <img src="images/logo-white.svg" alt="Equijust" width="114" height="32" />
     </a>
     <nav class="nav">
-      <a href="About.html" class="active">About us
+      <a href="About.html" class="active"><span data-i18n="nav_about">About us</span>
         <svg class="chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
       </a>
       <div class="nav-dropdown" id="svcDropdown">
-        <a href="Services.html" class="nav-dropdown-label">Services</a>
-        <button class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+        <a href="Services.html" class="nav-dropdown-link" data-i18n="nav_services">Services</a>
+        <button class="nav-dropdown-chev" aria-haspopup="true" aria-expanded="false">
           <svg class="chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <ul class="nav-dropdown-menu" role="menu"></ul>
       </div>
-      <a href="Contact.html">Contact</a>
+      <a href="Contact.html" data-i18n="nav_contact">Contact</a>
       <div class="nav-lang" id="navLang">
         <button class="nav-lang-toggle" aria-haspopup="listbox" aria-expanded="false">
           <span class="nav-lang-current">En</span>
           <svg class="chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <ul class="nav-lang-menu" role="listbox">
-          <li role="option" data-lang="en" class="active">English</li>
-          <li role="option" data-lang="es">Español</li>
+          <li role="option" data-lang="en" class="active" data-i18n="lang_en">English</li>
+          <li role="option" data-lang="es" data-i18n="lang_es">Español</li>
         </ul>
       </div>
     </nav>
@@ -586,12 +594,12 @@
 <section class="page-hero">
   <div class="page-hero-content">
     <div class="breadcrumb">
-      <a href="Home.html">Home</a>
+      <a href="Home.html" data-i18n="about_breadcrumb_home">Home</a>
       <span class="sep">/</span>
-      <span>About us</span>
+      <span data-i18n="about_breadcrumb_current">About us</span>
     </div>
-    <h1>Three decades <em>of trust,</em> precision <em>and expertise.</em></h1>
-    <p class="kicker">An independent firm of loss adjusters built on relationships, technical rigour and an instinct for getting complex claims right.</p>
+    <h1 data-i18n-html="about_hero_h1">Three decades <em>of trust,</em> precision <em>and expertise.</em></h1>
+    <p class="kicker" data-i18n="about_hero_kicker">An independent firm of loss adjusters built on relationships, technical rigour and an instinct for getting complex claims right.</p>
   </div>
 </section>
 
@@ -599,27 +607,27 @@
 <section class="who">
   <div class="who-inner">
     <div>
-      <div class="who-eyebrow">Who we are</div>
-      <h2 class="who-title">An independent <em>voice</em> in international claims management.</h2>
+      <div class="who-eyebrow" data-i18n="about_who_eyebrow">Who we are</div>
+      <h2 class="who-title" data-i18n-html="about_who_title">An independent <em>voice</em> in international claims management.</h2>
     </div>
     <div>
       <div class="who-body">
-        <p>Equijust was founded in 1996 with a simple conviction: that complex claims deserve specialists who understand both the technical detail and the human context behind every loss. Nearly thirty years on, that conviction still shapes how we work.</p>
-        <p>We are a firm of loss adjusters focused on <strong>financial lines, professional risks, commercial crime, cyber and specialty insurance</strong>. From our offices in London, Miami and Bogotá &mdash; and through a trusted network of partners across the globe &mdash; we handle claims that span jurisdictions, languages and legal systems.</p>
-        <p>Independence matters to us. It is what lets us give insurers, reinsurers and their clients an honest technical view, free from conflict and built on experience earned case by case.</p>
+        <p data-i18n="about_who_p1">Equijust was founded in 1996 with a simple conviction: that complex claims deserve specialists who understand both the technical detail and the human context behind every loss. Nearly thirty years on, that conviction still shapes how we work.</p>
+        <p data-i18n-html="about_who_p2">We are a firm of loss adjusters focused on <strong>financial lines, professional risks, commercial crime, cyber and specialty insurance</strong>. From our offices in London, Miami and Bogotá &mdash; and through a trusted network of partners across the globe &mdash; we handle claims that span jurisdictions, languages and legal systems.</p>
+        <p data-i18n="about_who_p3">Independence matters to us. It is what lets us give insurers, reinsurers and their clients an honest technical view, free from conflict and built on experience earned case by case.</p>
       </div>
       <div class="who-stats">
         <div>
           <div class="who-stat-num">30<span class="plus">+</span></div>
-          <div class="who-stat-label">Years of practice</div>
+          <div class="who-stat-label" data-i18n="about_stat1_label">Years of experience</div>
         </div>
         <div>
           <div class="who-stat-num">3</div>
-          <div class="who-stat-label">Offices worldwide</div>
+          <div class="who-stat-label" data-i18n="about_stat2_label">Offices worldwide</div>
         </div>
         <div>
           <div class="who-stat-num">9</div>
-          <div class="who-stat-label">Senior specialists</div>
+          <div class="who-stat-label" data-i18n="about_stat3_label">Senior specialists</div>
         </div>
       </div>
     </div>
@@ -630,17 +638,17 @@
 <section class="team">
   <div class="team-inner">
     <div class="team-head">
-      <div class="team-eyebrow">Our team</div>
-      <h2>The people behind every claim.</h2>
-      <p>Ten senior adjusters, lawyers and specialists based across London, Miami and Bogotá &mdash; working in English, Spanish and Portuguese.</p>
+      <div class="team-eyebrow" data-i18n="about_team_eyebrow">Our team</div>
+      <h2 data-i18n="about_team_h2">The people behind every claim.</h2>
+      <p data-i18n="about_team_lead">Ten senior adjusters, lawyers and specialists based across London, Miami and Bogotá — working in English, Spanish and Portuguese.</p>
     </div>
 
     <!-- LONDON -->
     <div class="office-group">
       <div class="office-head">
-        <div class="office-flag">London · UK</div>
-        <div class="office-name">Head office</div>
-        <div class="office-count">4 specialists</div>
+        <div class="office-flag" data-i18n="about_office_london_flag">London · UK</div>
+        <div class="office-name" data-i18n="about_office_london_name">Head office</div>
+        <div class="office-count" data-i18n="about_office_count_4">4 specialists</div>
       </div>
       <div class="team-grid" data-office="london"></div>
     </div>
@@ -648,9 +656,9 @@
     <!-- MIAMI -->
     <div class="office-group">
       <div class="office-head">
-        <div class="office-flag">Miami · USA</div>
-        <div class="office-name">The Americas</div>
-        <div class="office-count">3 specialists</div>
+        <div class="office-flag" data-i18n="about_office_miami_flag">Miami · USA</div>
+        <div class="office-name" data-i18n="about_office_miami_name">The Americas</div>
+        <div class="office-count" data-i18n="about_office_count_3">3 specialists</div>
       </div>
       <div class="team-grid" data-office="miami"></div>
     </div>
@@ -658,9 +666,9 @@
     <!-- BOGOTÁ -->
     <div class="office-group">
       <div class="office-head">
-        <div class="office-flag">Bogotá · CO</div>
-        <div class="office-name">Latin America</div>
-        <div class="office-count">2 specialists</div>
+        <div class="office-flag" data-i18n="about_office_bogota_flag">Bogotá · CO</div>
+        <div class="office-name" data-i18n="about_office_bogota_name">Latin America</div>
+        <div class="office-count" data-i18n="about_office_count_2">2 specialists</div>
       </div>
       <div class="team-grid" data-office="bogota"></div>
     </div>
@@ -670,9 +678,9 @@
 <!-- CTA -->
 <section class="cta">
   <div class="cta-inner">
-    <h2>Have a complex claim <em>on your desk?</em></h2>
-    <p>Talk to us about how we can help — our teams in London, Miami and Bogotá respond in the language and jurisdiction you need.</p>
-    <a href="Contact.html" class="btn btn-primary">Get in touch
+    <h2 data-i18n-html="about_cta_h2">Have a complex claim <em>on your desk?</em></h2>
+    <p data-i18n="about_cta_p">Talk to us about how we can help — our teams in London, Miami and Bogotá respond in the language and jurisdiction you need.</p>
+    <a href="Contact.html" class="btn btn-primary"><span data-i18n="about_cta_btn">Get in touch</span>
       <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
     </a>
   </div>
@@ -683,43 +691,30 @@
   <div class="footer-inner">
     <div class="footer-cols">
       <div class="footer-col">
-        <h4>About Us</h4>
-        <a href="About.html">Who We Are</a>
-        <a href="About.html#team">Our Team</a>
+        <h4 data-i18n="footer_col_about">About Us</h4>
+        <a href="About.html" data-i18n="footer_link_who_we_are">Who We Are</a>
+        <a href="About.html#team" data-i18n="footer_link_our_team">Our Team</a>
       </div>
       <div class="footer-col">
-        <h4>Contact</h4>
-        <a href="Contact.html">Contact Us</a>
-        <a href="#">Offices</a>
+        <h4 data-i18n="footer_col_contact">Contact</h4>
+        <a href="Contact.html" data-i18n="footer_link_contact_us">Contact Us</a>
+        <a href="#" data-i18n="footer_link_offices">Offices</a>
       </div>
       <div class="footer-col">
-        <h4>Services</h4>
-        <a href="Services.html#financial-lines">Financial Lines &amp; Professional Risks</a>
-        <a href="Services.html#cyber">Cyber Insurance</a>
-        <a href="Services.html#commercial-crime">Commercial Crime Risks</a>
-        <a href="Services.html#casualty">Commercial Liability &amp; Casualty</a>
-        <a href="Services.html#specialty">Specialty Insurance</a>
-        <a href="Services.html#specie">Specie &amp; High-Value Goods</a>
-        <a href="Services.html#financial-lines">Pre-Loss Consultancy &amp; Risk Assessment</a>
-      </div>
-      <div class="footer-col footer-col-map">
-        <div class="map-wrap">
-          <img src="images/world-map.svg" alt="" aria-hidden="true" />
-          <svg viewBox="0 0 382 152" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="191" cy="33" r="4" fill="#BFA373"/>
-            <circle cx="191" cy="33" r="2" fill="#fff"/>
-            <circle cx="106" cy="54" r="4" fill="#BFA373"/>
-            <circle cx="106" cy="54" r="2" fill="#fff"/>
-            <circle cx="112" cy="72" r="4" fill="#BFA373"/>
-            <circle cx="112" cy="72" r="2" fill="#fff"/>
-          </svg>
-        </div>
+        <h4 data-i18n="footer_col_services">Services</h4>
+        <a href="Services.html#financial-lines" data-i18n="footer_link_fin_lines">Financial Lines &amp; Professional Risks</a>
+        <a href="Services.html#cyber" data-i18n="footer_link_cyber">Cyber Insurance</a>
+        <a href="Services.html#commercial-crime" data-i18n="footer_link_crime">Commercial Crime Risks</a>
+        <a href="Services.html#casualty" data-i18n="footer_link_casualty">Commercial Liability &amp; Casualty</a>
+        <a href="Services.html#specialty" data-i18n="footer_link_specialty">Specialty Insurance</a>
+        <a href="Services.html#specie" data-i18n="footer_link_specie">Specie &amp; High-Value Goods</a>
+        <a href="Services.html#financial-lines" data-i18n="footer_link_preloss">Pre-Loss Consultancy &amp; Risk Assessment</a>
       </div>
     </div>
     <div class="footer-divider"></div>
     <div class="footer-bottom">
       <div class="footer-nav">
-        <a href="Privacy-Policy.html">Privacy Policy</a>
+        <a href="Privacy-Policy.html" data-i18n="footer_link_privacy">Privacy Policy</a>
         <a href="https://www.linkedin.com/company/equijust-inc./" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zM6.814 20.452H3.854V9h2.96v11.452z"/></svg>
           LinkedIn
@@ -744,7 +739,7 @@ window.TEAM = {
       email: 'bill.parry@equijust.com',
       short: 'Founding member of Equijust since 1996. Handles claims across Europe, the Middle East and Asia-Pacific.',
       bio: [
-        "Bill Parry is one of Equijust's founding members, having launched the firm in 1996. He began his insurance career as an international reinsurance underwriter before moving into loss adjusting in 1992.",
+        "Bill Parry is one of Equijust founding members, having launched the firm in 1996. He began his insurance career as an international reinsurance underwriter before moving into loss adjusting in 1992.",
         "He now handles claims across Europe, the Middle East and Asia-Pacific, and is fluent in Spanish with extensive experience across Latin America."
       ]
     },
@@ -781,9 +776,9 @@ window.TEAM = {
       languages: ['EN', 'ES'],
       linkedin: 'https://www.linkedin.com/in/simon-bailey-424b74b9/',
       email: 'simon.bailey@equijust.com',
-      short: "20 years' experience across Latin America, the Caribbean and Sub-Saharan Africa. King's College London (honours).",
+      short: "20 years experience across Latin America, the Caribbean and Sub-Saharan Africa. Kings College London (honours).",
       bio: [
-        "Simon Bailey graduated with honours from King's College London and has 20 years of experience adjusting financial institutions, cyber, PI and D&O claims — primarily across Latin America and the Caribbean but also in Sub-Saharan Africa.",
+        "Simon Bailey graduated with honours from Kings College London and has 20 years of experience adjusting financial institutions, cyber, PI and D&O claims — primarily across Latin America and the Caribbean but also in Sub-Saharan Africa.",
         "He is fluent in Spanish and is based at the firm's main London offices."
       ]
     }
@@ -798,7 +793,7 @@ window.TEAM = {
       email: 'anton.kidd@equijust.com',
       short: 'Founding partner and director since 1996. ACII and ACILA. Specialist in complex claims across the Americas.',
       bio: [
-        "Anton Kidd is a founding partner and director of Equijust since 1996. Previously he managed a major international adjuster's office in Bogotá from 1991 to 1996.",
+        "Anton Kidd is a founding partner and director of Equijust since 1996. Previously he managed a major international adjuster office in Bogotá from 1991 to 1996.",
         "He holds a degree in History and ACII and ACILA qualifications, speaks Spanish fluently, and has handled some of the most complex financial institutions claims in the Americas and the Caribbean."
       ]
     },
@@ -822,7 +817,7 @@ window.TEAM = {
       languages: ['EN', 'ES'],
       linkedin: 'https://www.linkedin.com/in/johanna-sarmiento/',
       email: 'johanna.sarmiento@equijust.com',
-      short: "Business Administration graduate with 10+ years' experience in client service, administration and accounts.",
+      short: "Business Administration graduate with 10+ years experience in client service, administration and accounts.",
       bio: [
         "Johanna Sarmiento joined Equijust in December 2017. She holds a degree in Business Administration and brings extensive experience across administrative and accounting functions, together with more than ten years in client service."
       ]
@@ -838,7 +833,7 @@ window.TEAM = {
       email: 'carolina.cuellar@equijust.com',
       short: 'Qualified lawyer and ACFS-accredited anti-fraud specialist. Financial crime and asset recovery across LatAm.',
       bio: [
-        "Carolina Cuellar is a qualified lawyer and ACFS-accredited anti-fraud specialist (accredited in London). She specialises in international business, with deep experience in financial crime and fraud investigations, asset tracing and recovery, and multi-jurisdictional litigation.",
+        "Carolina Cuellar is a qualified lawyer and ACFS-accredited anti-fraud specialist (accredited in London). She specialises in international business, with deep experience in financial crime and fraud investigations, asset tracing and recovery and multi-jurisdictional litigation.",
         "She joined Equijust in 2015, after working in London with one of the Big Four consulting and audit firms as well as another loss adjusting firm. She handles financial institutions and commercial crime claims, along with professional indemnity and D&O matters across Latin America and the Caribbean."
       ]
     },
@@ -894,7 +889,7 @@ window.TEAM = {
     const wrap = document.getElementById('svcDropdown');
     if (!wrap) return;
     const menu = wrap.querySelector('.nav-dropdown-menu');
-    const toggle = wrap.querySelector('.nav-dropdown-toggle');
+    const toggle = wrap.querySelector('.nav-dropdown-chev');
     menu.innerHTML = window.SERVICES.map((s, i) => `
       <li role="none">
         <a role="menuitem" href="Services.html#${s.slug}">
@@ -933,6 +928,7 @@ window.TEAM = {
         current.textContent = labels[li.dataset.lang] || 'En';
         wrap.classList.remove('open');
         toggle.setAttribute('aria-expanded', 'false');
+        window.setLanguage && window.setLanguage(li.dataset.lang);
       });
     });
     document.addEventListener('click', (e) => {
@@ -978,7 +974,7 @@ window.TEAM = {
             <p class="member-bio-short">${escape(m.short)}</p>
             <div class="member-actions">
               <button class="member-toggle">
-                <span class="label">Read full bio</span>
+                <span class="label" data-i18n="about_member_toggle_open">Read full bio</span>
                 <svg class="chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
               </button>
               <div class="member-social">${linkedinBtn}</div>
@@ -1046,6 +1042,7 @@ window.TEAM = {
   })();
 </script>
 
-
+<script src="translations.js"></script>
+<script src="i18n.js"></script>
 </body>
 </html>

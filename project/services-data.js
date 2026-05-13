@@ -2,16 +2,17 @@ window.SERVICES = [
   {
     slug: 'financial-lines',
     name: 'Financial Lines and Professional Risks',
+    nav: 'Financial Lines & PI',
     hint: 'BBB · PI/E&O · D&O · Public Officials',
     eyebrow: 'Core line of cover',
     image: 'images/financial-lines-hero.jpg',
     description: 'Our foundational area of practice. We investigate claims brought against a broad spectrum of institutions — banks, investment houses, brokers, financial advisers, accountants, insurance brokers and government bodies — where technical policy knowledge and financial fluency decide the outcome.',
     coverage: [
-      "Bankers' Blanket Bond (BBB)",
+      "Bankers Blanket Bond (BBB)",
       'Plastic Card Cover',
       'Professional Indemnity / Errors & Omissions',
-      "Directors' & Officers' Insurance",
-      "Public Servants' Liability"
+      "Directors & Officers Insurance",
+      "Public Servants Liability"
     ],
     cases: [
       'Multi-million USD letters-of-credit and bills-of-lading fraud perpetrated against banks in the UAE and the Middle East.',
@@ -33,12 +34,13 @@ window.SERVICES = [
       'Negligence allegations against a UK investment house over mis-sold shares and derivatives.',
       'Claim against stockbrokers in Greece relating to the handling of rights issues.',
       'Litigation against a Latin American stock exchange over the expulsion of members.',
-      "USD 15M investigation by Colombia's Comptroller General's Office into the acquisition and operation of a television subsidiary by senior public officials of a major utility."
+      "USD 15M investigation by Colombia Comptroller General Office into the acquisition and operation of a television subsidiary by senior public officials of a major utility."
     ]
   },
   {
     slug: 'commercial-crime',
     name: 'Commercial Crime Risks',
+    nav: 'Commercial Crime',
     hint: 'Employee Dishonesty · Procurement · Inventory',
     eyebrow: 'Corporate crime',
     image: 'images/senior-man-diagram.jpg',
@@ -62,6 +64,7 @@ window.SERVICES = [
   {
     slug: 'casualty',
     name: 'Commercial Liability and Casualty Risks',
+    nav: 'Liability & Casualty',
     hint: 'Product Recall · Product Liability · Tampering',
     eyebrow: 'Liability exposures',
     image: 'images/casualty-hero.jpg',
@@ -82,6 +85,7 @@ window.SERVICES = [
   {
     slug: 'specie',
     name: 'Specie and High-Value Goods',
+    nav: 'Specie & High-Value',
     hint: 'Pre-Loss · Risk Assessment · Consultancy',
     eyebrow: 'Pre-loss consultancy',
     image: 'images/briefcases.jpg',
@@ -156,6 +160,7 @@ window.SERVICES = [
   {
     slug: 'cyber',
     name: 'Cyber Insurance',
+    nav: 'Cyber Insurance',
     hint: 'Ransomware · Social Engineering · Data Breach',
     eyebrow: 'Technology & data risk',
     image: 'images/cyber-hero.jpg',
@@ -182,9 +187,9 @@ window.SERVICES = [
       'First-party and liability loss claim for a managed IT services business following a network system failure and back-up protocol issues.',
       'Potential multi-million USD liability at an outsourced data-processing centre for a Latin American public health entity, involving the deliberate theft of patient records.',
       'Trojan penetration of an Eastern European bank network, giving hackers access to confidential customer account data.',
-      'Hacking of a South American bank\'s internet banking system allowing capture of log-in credentials used to execute fraudulent transfers.',
-      "Receipt and processing of fraudulent wire-transfer instructions by a UK financial services firm, originating from the hacking of a client's email account.",
-      'Hacking of a Middle Eastern foreign exchange company\'s network to process unauthorised fund transfers through an international money-transfer platform.',
+      'Hacking of a South American bank internet banking system allowing capture of log-in credentials used to execute fraudulent transfers.',
+      "Receipt and processing of fraudulent wire-transfer instructions by a UK financial services firm, originating from the hacking of a client email account.",
+      'Hacking of a Middle Eastern foreign exchange company network to process unauthorised fund transfers through an international money-transfer platform.',
       'Vishing perpetrated against the French subsidiary of a multinational, resulting in payments being made to foreign bank accounts opened by the fraudsters.',
       'Denial-of-service attacks and customer portfolio manipulation against a Middle Eastern online trading platform.',
       'Multi-million USD loss through manipulation of credit-card CVC fields, tricking a card authoriser in Bolivia into approving fraudulent transactions.',
@@ -194,6 +199,7 @@ window.SERVICES = [
   {
     slug: 'specialty',
     name: 'Specialty Insurance',
+    nav: 'Specialty Insurance',
     hint: 'Export Credit · Contract Frustration',
     eyebrow: 'Trade & political risk',
     image: 'images/cityscape-aerial.jpg',
